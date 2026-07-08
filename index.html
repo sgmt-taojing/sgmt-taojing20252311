@@ -274,6 +274,10 @@
     /* ===== PROGRESS BAR TOP ===== */
     .top-bar { height:3px; background:var(--border); margin-bottom:0; }
     .top-fill { height:100%; background:linear-gradient(90deg,var(--primary),var(--secondary)); transition:width .4s; }
+
+    /* ===== SUBVIEW OVERLAY ===== */
+    .subview { position:fixed; top:0; left:0; right:0; bottom:0; overflow-y:auto; -webkit-overflow-scrolling:touch; background:var(--bg); z-index:50; display:none; padding:16px 14px; }
+    #main-screen { display:block; }
   </style>
 </head>
 <body>
@@ -281,6 +285,7 @@
 <canvas id="conf"></canvas>
 <div id="toast">🎉</div>
 
+<div id="main-screen">
 <!-- HEADER -->
 <div class="hdr">
   <div class="hdr-top">
@@ -349,10 +354,11 @@
   </div>
 
 </div>
+</div><!-- /main-screen -->
 
 <!-- ===== SUB VIEWS ===== -->
 <!-- Country List -->
-<div id="v-countries" style="display:none;padding:16px 14px;">
+<div id="v-countries" class="subview">
   <button class="bk" onclick="rv('main')">← 返回</button>
   <div class="stitle-wrap"><div class="stitle-main" id="ct-title">🇬🇧 英国</div></div>
   <div class="lvl-row" id="ct-lvl"></div>
@@ -360,31 +366,31 @@
 </div>
 
 <!-- Practice -->
-<div id="v-practice" style="display:none;padding:16px 14px;">
+<div id="v-practice" class="subview">
   <button class="bk" onclick="endPrac()">← 返回</button>
   <div id="prac-area"></div>
 </div>
 
 <!-- Quiz Session -->
-<div id="v-quiz" style="display:none;padding:16px 14px;">
+<div id="v-quiz" class="subview">
   <button class="bk" onclick="rv('quiz')">← 返回练习</button>
   <div id="qz-area"></div>
 </div>
 
 <!-- Song Listen -->
-<div id="v-song" style="display:none;padding:16px 14px;">
+<div id="v-song" class="subview">
   <button class="bk" onclick="rv('song')">← 返回听歌</button>
   <div id="ls-area"></div>
 </div>
 
 <!-- Culture Detail -->
-<div id="v-culture" style="display:none;padding:16px 14px;">
+<div id="v-culture" class="subview">
   <button class="bk" onclick="rv('countries')">← 返回国家</button>
   <div id="cult-area"></div>
 </div>
 
 <!-- Stats -->
-<div id="v-stats" style="display:none;padding:16px 14px;">
+<div id="v-stats" class="subview">
   <button class="bk" onclick="rv('main')">← 返回</button>
   <h3 style="font-size:17px;margin-bottom:14px;">📊 学习统计</h3>
   <div class="statd" id="statd-area"></div>
@@ -417,6 +423,7 @@ const DATA = {
       tags: ['君主立宪', '下午茶', '绅士文化', '摇滚乐'],
       history: '英国历史悠久，1066年诺曼底征服开启新纪元。16世纪伊丽莎白一世时期成为海上霸主。工业革命发源地，创造了现代世界的许多发明。',
       food: '英式早餐(Full English Breakfast)、炸鱼薯条(Fish & Chips)、周日烤肉(Sunday Roast)、下午茶(Afternoon Tea)',
+      lifestyle: '英国人爱排队、爱聊天气、注重礼貌与隐私；下午茶是重要社交仪式；周日全家吃烤肉；酒吧(pub)是日常社交中心；见面常谈天气而非私人话题，保持“绅士”分寸。',
       idiom: [
         {c:'天气虽冷，但我们还是出去吧',e:"It's raining, but let's go out anyway"},
         {c:'别拐弯抹角了，直说吧',e:"Don't beat around the bush"},
@@ -510,6 +517,7 @@ const DATA = {
       tags: ['自由', '多元文化', '创新', '好莱坞'],
       history: '1776年独立，1789年宪法生效。19世纪西进运动，20世纪两次世界大战后成为超级大国。硅谷、好莱坞、华尔街代表科技、影视、金融三大产业。',
       food: '汉堡包(Hamburger)、热狗(Hot Dog)、披萨(Pizza)、感恩节火鸡(Turkey)、牛排(Steak)',
+      lifestyle: '美国人热情直接、注重效率与个人空间；小费文化盛行(餐厅15%-20%)；咖啡外带文化浓厚；自驾是主流出行方式；周末爱烧烤BBQ和看体育比赛；见面常拥抱或击掌。',
       idiom: [
         {c:'这事我全包了', e:"I've got this completely covered"},
         {c:'好戏还在后头呢', e:"The best is yet to come"},
@@ -602,6 +610,7 @@ const DATA = {
       tags: ['花园城市', '多元文化', '食阁', '严格法律'],
       history: '1819年莱佛士爵士建立英国贸易站，1965年独立。亚洲四小龙之一，以高效治理著称。华人、马来人、印度人多元共存。',
       food: '海南鸡饭(Hainanese Chicken Rice)、肉骨茶(Bak Kut Teh)、辣椒蟹(Chili Crab)、叻沙(Laksa)、咖椰吐司(Kaya Toast)',
+      lifestyle: '多元种族和谐共处，华人、马来、印度三大族群各有节日与美食；食阁(Hawker Centre)是全民食堂，一日三餐常在食阁解决；讲究秩序与清洁，公共场所禁止嚼口香糖与乱丢垃圾；英语常混 Singlish 方言；交通靠 MRT 地铁四通八达。',
       idiom: [
         {c:'慢慢来，不着急', e:"Take your time, lah", h:"teik ior taim la:"},
         {c:'吃了吗？', e:"Have you eaten?", h:"hav iu itn?"},
@@ -655,6 +664,7 @@ const DATA = {
       tags: ['多元文化', '美食', '热带的国土', '宗教和谐'],
       history: '1957年独立，曾为英国殖民地。华人、马来人、印度人三大民族共同生活。吉隆坡为首都，2020年新行政中心布城建成。',
       food: '椰浆饭(Nasi Lemak)、沙爹(Satay)、炒粿条(Char Kway Teow)、肉骨茶(Bak Kut Teh)、拉茶(Teh Tarik)',
+      lifestyle: '各族群保留各自传统节日与美食；清真(Halal)饮食普遍；热带气候常年夏季，着装清凉；周末家庭聚餐是常态；多元宗教并存、彼此尊重；街头美食与夜市文化兴盛。',
       idiom: [
         {c:'慢慢来，不着急', e:"No rush, lah", h:"nou rash la:"},
         {c:'很热啊今天', e:"So hot today, ah", h:"sou hot tudei a:"},
@@ -694,6 +704,7 @@ const DATA = {
       tags: ['微笑之国', '佛教', '美食', '海岛'],
       history: '泰国是东南亚唯一未被殖民的国家，1932年建立君主立宪制。佛教为国教，曼谷为首都。清迈为北部文化中心，普吉、芭提雅为旅游胜地。',
       food: '冬阴功汤(Tom Yum Goong)、泰式炒河粉(Pad Thai)、芒果糯米饭(Khao Niao Mamuang)、绿咖喱(Green Curry)',
+      lifestyle: '以佛教为国教，寺庙遍布，见面行“合十礼”(wai)；民众温和爱笑，被称为“微笑之国”；注重“面子”与尊重王室；街头美食便宜丰富；周末夜市热闹；头部视为神圣，不可随意触摸他人头顶。',
       idiom: [
         {c:'萨瓦迪卡（你好）', e:"Sawadee kha (female) / Sawadee khrap (male)", h:"sawadi ka / sawadi krap"},
         {c:'不用谢', e:"Mai pen rai", h:"mai pen rai"},
@@ -924,16 +935,28 @@ function getTotalPhrases() {
 // ============================================================
 function switchTab(tab) {
   S.tab = tab;
+  hideViews();
   document.querySelectorAll('.tabbtn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-'+tab)?.classList.add('active');
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('p-'+tab)?.classList.add('active');
-  hideAllViews();
 
   if (tab==='learn') renderLearn();
   if (tab==='quiz') renderQuiz();
   if (tab==='song') renderSongList();
   if (tab==='ach') renderAch();
+}
+
+function showView(id) {
+  document.getElementById('main-screen').style.display = 'none';
+  hideAllViews();
+  document.getElementById(id).style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+function hideViews() {
+  document.getElementById('main-screen').style.display = 'block';
+  hideAllViews();
 }
 
 function hideAllViews() {
@@ -943,22 +966,20 @@ function hideAllViews() {
 }
 
 function rv(name) {
-  hideAllViews();
-  if (name==='main') { switchTab(S.tab); return; }
-  if (name==='countries') { showCountries(S.currentCountry); return; }
-  if (name==='quiz') { switchTab('quiz'); return; }
-  if (name==='song') { switchTab('song'); return; }
+  if (name==='main') { hideViews(); switchTab(S.tab); return; }
+  if (name==='countries') { hideViews(); showView('v-countries'); return; }
+  if (name==='quiz') { hideViews(); switchTab('quiz'); return; }
+  if (name==='song') { hideViews(); switchTab('song'); return; }
 }
 
 function goStats() {
-  hideAllViews();
-  document.getElementById('v-stats').style.display = 'block';
+  showView('v-stats');
   renderStats();
 }
 
 function showCountryView(countryKey) {
   S.currentCountry = countryKey;
-  document.getElementById('v-countries').style.display = 'block';
+  showView('v-countries');
   showCountries(countryKey);
 }
 
@@ -967,7 +988,8 @@ function showCountryView(countryKey) {
 // ============================================================
 function renderLearn() {
   const area = document.getElementById('cat-area');
-  const countries = Object.keys(DATA).filter(k => k !== 'SONGS');
+  let countries = Object.keys(DATA).filter(k => k !== 'SONGS');
+  if (S.country && S.country !== 'ALL') countries = countries.filter(k => k === S.country);
   let h = '';
   countries.forEach(key => {
     const d = DATA[key];
@@ -1022,6 +1044,21 @@ function renderCountryScenes(key) {
   const container = document.getElementById('ct-scenes');
   let html = '';
 
+  // ===== 文化风貌概览（置顶）=====
+  if (d.culture) {
+    const c = d.culture;
+    html += `
+      <div class="culture-card" onclick="showCulture('${key}')" style="background:linear-gradient(135deg,${d.color},#fff);">
+        <div class="culture-emoji">🏛️</div>
+        <div class="culture-title">${d.flag} ${d.name} · 人文风貌</div>
+        <div class="culture-desc">${c.brief}</div>
+        <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px">
+          ${c.tags.map(t=>`<span class="culture-tag tag-${key.toLowerCase()}">${t}</span>`).join('')}
+        </div>
+        <div style="margin-top:10px;font-size:11px;color:var(--primary);font-weight:700;">👉 点这里看 历史 · 美食 · 地道表达</div>
+      </div>`;
+  }
+
   secs.forEach(sec => {
     html += `<div style="margin-top:16px;margin-bottom:4px;"><span style="font-size:12px;font-weight:800;color:var(--text-light);">${sec.title}</span></div>`;
     sec.scenes.forEach(sc => {
@@ -1067,7 +1104,7 @@ function renderCountryScenes(key) {
 function showCulture(key) {
   const d = DATA[key];
   if (!d.culture) return;
-  document.getElementById('v-culture').style.display = 'block';
+  showView('v-culture');
   const c = d.culture;
   document.getElementById('cult-area').innerHTML = `
     <div class="cult-detail">
@@ -1086,6 +1123,10 @@ function showCulture(key) {
         <p>${c.food}</p>
       </div>
       <div class="cult-section">
+        <div class="cult-section-title">🏠 生活习惯</div>
+        <p>${c.lifestyle}</p>
+      </div>
+      <div class="cult-section">
         <div class="cult-section-title">💬 地道表达</div>
         ${c.idiom.map(i=>`
           <div class="cult-phrase">
@@ -1093,7 +1134,7 @@ function showCulture(key) {
             <div class="cult-ph-e">${i.e}</div>
           </div>`).join('')}
       </div>
-      <button class="spkbtn" onclick="speak('${c.idiom[0]?.e.replace(/'/g,"\\'")}')">🔊 听发音</button>
+      <button class="spkbtn" onclick="speak('${(c.idiom[0]?.e||'').replace(/'/g,"\\'")}')">🔊 听发音</button>
     </div>
     <div class="tip" style="margin-top:12px">
       <div class="tip-t">💡 学习建议</div>
@@ -1169,7 +1210,7 @@ function endPrac() {
     saveS();
     updateHdr();
   }
-  document.getElementById('v-practice').style.display = 'none';
+  hideViews();
   switchTab('learn');
   const score = Math.min(S.pracIdx, S.pracQueue.length) * 10;
   if (score > 0) {
@@ -1317,7 +1358,7 @@ function renderSongList() {
 function openSong(id) {
   const song = DATA.SONGS.find(s=>s.id===id);
   if (!song) return;
-  document.getElementById('v-song').style.display = 'block';
+  showView('v-song');
   const flag = song.country==='UK'?'🇬🇧':'🇺🇸';
   const lvlD = song.lvl==='e'?'diff-e':song.lvl==='m'?'diff-m':'diff-h';
   const lvlT = song.lvl==='e'?'初级':song.lvl==='m'?'中级':'高级';
