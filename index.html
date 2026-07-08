@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>新马泰英语学习</title>
+  <title>环球英语学习</title>
   <style>
     :root {
       --primary: #4F46E5;
-      --primary-light: #818CF8;
+      --p2: #7C3AED;
       --secondary: #10B981;
       --accent: #F59E0B;
       --danger: #EF4444;
@@ -17,1757 +17,1503 @@
       --text-light: #64748B;
       --border: #E2E8F0;
     }
+    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+    body { font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
+    /* ===== HEADER ===== */
+    .hdr {
+      background:linear-gradient(135deg,#4F46E5,#7C3AED);
+      color:#fff; padding:18px 20px 56px;
     }
-
-    /* Header */
-    .header {
-      background: linear-gradient(135deg, #4F46E5, #7C3AED);
-      color: white;
-      padding: 20px 20px 60px;
-      position: relative;
-    }
-    .header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    .header-title {
-      font-size: 20px;
-      font-weight: 700;
-    }
+    .hdr-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+    .hdr-title { font-size:19px; font-weight:800; }
     .streak-badge {
-      background: rgba(255,255,255,0.2);
-      border-radius: 20px;
-      padding: 6px 14px;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
+      background:rgba(255,255,255,.2); border-radius:20px;
+      padding:5px 13px; font-size:12px; font-weight:600;
+      display:flex; align-items:center; gap:4px; cursor:pointer;
     }
-    .streak-badge .fire { font-size: 16px; }
+    .stats-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    .stat-card { background:rgba(255,255,255,.15); border-radius:12px; padding:10px 8px; text-align:center; }
+    .stat-num { font-size:20px; font-weight:900; }
+    .stat-lbl { font-size:10px; opacity:.8; margin-top:1px; }
 
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    .stat-card {
-      background: rgba(255,255,255,0.15);
-      border-radius: 14px;
-      padding: 12px;
-      text-align: center;
-    }
-    .stat-num {
-      font-size: 22px;
-      font-weight: 800;
-    }
-    .stat-label {
-      font-size: 11px;
-      opacity: 0.8;
-      margin-top: 2px;
-    }
+    /* Streak dots */
+    .streak-bar { display:flex; gap:3px; justify-content:center; margin-top:10px; }
+    .sdot { width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,.2); border:2px solid rgba(255,255,255,.3); display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:600; color:rgba(255,255,255,.5); }
+    .sdot.done { background:var(--accent); border-color:var(--accent); color:#fff; }
+    .sdot.today { border-color:#fff; color:#fff; }
 
-    /* Streak calendar */
-    .streak-bar {
-      display: flex;
-      gap: 4px;
-      justify-content: center;
-      margin-top: 12px;
-    }
-    .streak-dot {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      border: 2px solid rgba(255,255,255,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.6);
-    }
-    .streak-dot.done {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: white;
-    }
-    .streak-dot.today {
-      border-color: white;
-      color: white;
-    }
+    /* ===== MAIN BODY ===== */
+    .body-wrap { margin-top:-38px; padding:0 14px 90px; }
 
-    /* Main content */
-    .main-content {
-      margin-top: -40px;
-      padding: 0 16px 100px;
-    }
+    /* ===== TAB BAR ===== */
+    .tabbar { display:flex; background:var(--card); border-radius:14px; padding:5px; gap:3px; box-shadow:0 2px 12px rgba(0,0,0,.08); margin-bottom:14px; }
+    .tabbtn { flex:1; padding:9px 4px; border:none; background:transparent; border-radius:10px; font-size:12px; font-weight:700; color:var(--text-light); cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; transition:all .2s; }
+    .tabbtn .ico { font-size:18px; }
+    .tabbtn.active { background:var(--primary); color:#fff; }
 
-    /* Tab bar */
-    .tab-bar {
-      display: flex;
-      background: var(--card);
-      border-radius: 16px;
-      padding: 6px;
-      gap: 4px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      margin-bottom: 16px;
-    }
-    .tab-btn {
-      flex: 1;
-      padding: 10px 8px;
-      border: none;
-      background: transparent;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-light);
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-    }
-    .tab-btn .tab-icon { font-size: 18px; }
-    .tab-btn.active {
-      background: var(--primary);
-      color: white;
-    }
+    /* ===== PANELS ===== */
+    .panel { display:none; }
+    .panel.active { display:block; animation:fadeUp .25s; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
 
-    /* Panels */
-    .panel { display: none; }
-    .panel.active { display: block; animation: fadeIn 0.3s; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    /* ===== CATEGORY CARDS ===== */
+    .cgrid { display:grid; grid-template-columns:1fr 1fr; gap:11px; }
+    .ccard {
+      background:var(--card); border-radius:15px; padding:16px 13px;
+      box-shadow:0 2px 8px rgba(0,0,0,.05); cursor:pointer;
+      border:2px solid transparent; transition:all .2s;
+    }
+    .ccard:active { transform:scale(.96); }
+    .ccard.sel { border-color:var(--primary); }
+    .ci { font-size:30px; margin-bottom:7px; }
+    .cn { font-weight:700; font-size:13px; line-height:1.3; }
+    .ccnt { font-size:11px; color:var(--text-light); margin-top:3px; }
+    .cprog { margin-top:8px; height:4px; background:var(--border); border-radius:4px; overflow:hidden; }
+    .cprog-bar { height:100%; background:var(--primary); border-radius:4px; transition:width .5s; }
 
-    /* Category cards */
-    .cat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .cat-card {
-      background: var(--card);
-      border-radius: 16px;
-      padding: 18px 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: all 0.2s;
-    }
-    .cat-card:active { transform: scale(0.97); }
-    .cat-card.selected { border-color: var(--primary); }
-    .cat-icon { font-size: 32px; margin-bottom: 8px; }
-    .cat-name { font-weight: 700; font-size: 14px; }
-    .cat-count { font-size: 11px; color: var(--text-light); margin-top: 2px; }
-    .cat-progress {
-      margin-top: 10px;
-      height: 4px;
-      background: var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .cat-progress-bar {
-      height: 100%;
-      background: var(--primary);
-      border-radius: 4px;
-      transition: width 0.5s;
-    }
+    /* ===== LEVEL FILTER ===== */
+    .lvl-row { display:flex; gap:7px; margin-bottom:12px; flex-wrap:wrap; }
+    .lvl-chip { padding:5px 13px; border-radius:20px; border:2px solid var(--border); background:#fff; font-size:12px; font-weight:600; color:var(--text-light); cursor:pointer; transition:all .2s; }
+    .lvl-chip.sel { background:var(--primary); border-color:var(--primary); color:#fff; }
+    .lvl-chip:active { transform:scale(.95); }
 
-    /* Scene list */
+    /* ===== SCENE LIST ===== */
     .scene-card {
-      background: var(--card);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: all 0.2s;
+      background:var(--card); border-radius:14px; padding:14px 15px; margin-bottom:10px;
+      box-shadow:0 2px 6px rgba(0,0,0,.05); cursor:pointer;
+      border:2px solid transparent; transition:all .2s;
     }
-    .scene-card:active { transform: scale(0.98); }
-    .scene-card.mastered { border-color: var(--secondary); }
-    .scene-card.practiced { border-color: var(--accent); }
-    .scene-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .scene-title { font-weight: 700; font-size: 15px; }
-    .scene-badge {
-      font-size: 11px;
-      padding: 3px 10px;
-      border-radius: 10px;
-      font-weight: 600;
-    }
-    .badge-mastered { background: #D1FAE5; color: #065F46; }
-    .badge-practiced { background: #FEF3C7; color: #92400E; }
-    .badge-new { background: #EEF2FF; color: #4338CA; }
-    .scene-desc { font-size: 13px; color: var(--text-light); }
+    .scene-card:active { transform:scale(.98); }
+    .scene-card.mst { border-color:var(--secondary); }
+    .scene-card.prc { border-color:var(--accent); }
+    .sh { display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; }
+    .stitle { font-weight:700; font-size:14px; }
+    .sbadge { font-size:10px; padding:3px 9px; border-radius:10px; font-weight:600; }
+    .sbdg-mst { background:#D1FAE5; color:#065F46; }
+    .sbdg-prc { background:#FEF3C7; color:#92400E; }
+    .sbdg-new { background:#EEF2FF; color:#4338CA; }
+    .sdesc { font-size:12px; color:var(--text-light); }
 
-    /* Practice card */
-    .practice-card {
-      background: var(--card);
-      border-radius: 20px;
-      padding: 24px 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      margin-bottom: 16px;
+    /* ===== PRACTICE CARD ===== */
+    .pcard { background:var(--card); border-radius:18px; padding:20px 16px; box-shadow:0 4px 18px rgba(0,0,0,.07); margin-bottom:14px; }
+    .pcat { font-size:11px; color:var(--primary); font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px; }
+    .plen { font-size:12px; color:var(--text-light); margin-bottom:12px; }
+    .pphrase { background:#F1F5F9; border-radius:12px; padding:13px 14px; margin-bottom:8px; border-left:4px solid var(--primary); }
+    .pp-cn { font-size:14px; font-weight:600; margin-bottom:5px; }
+    .pp-en { font-size:16px; color:var(--primary); font-weight:700; line-height:1.4; }
+    .pp-hint { font-size:11px; color:#94A3B8; margin-top:5px; font-style:italic; }
+    .spkbtn {
+      display:inline-flex; align-items:center; gap:5px;
+      background:var(--primary); color:#fff; border:none;
+      border-radius:20px; padding:6px 14px; font-size:12px; font-weight:600;
+      cursor:pointer; margin-top:7px;
     }
-    .practice-category {
-      font-size: 12px;
-      color: var(--primary);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-    }
-    .practice-scenario {
-      font-size: 15px;
-      color: var(--text-light);
-      margin-bottom: 16px;
-    }
-    .phrase-card {
-      background: #F1F5F9;
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
-      border-left: 4px solid var(--primary);
-    }
-    .phrase-cn { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-    .phrase-en { font-size: 16px; color: var(--primary); font-weight: 700; }
-    .phrase-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 20px;
-      padding: 7px 16px;
-      font-size: 13px;
-      margin-top: 8px;
-      cursor: pointer;
-    }
-    .phrase-btn:active { opacity: 0.8; }
+    .spkbtn:active { opacity:.8; transform:scale(.96); }
 
-    /* Speak button */
-    .speak-section {
-      text-align: center;
-      margin-top: 20px;
-    }
-    .speak-btn {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary), #7C3AED);
-      border: none;
-      color: white;
-      font-size: 30px;
-      cursor: pointer;
-      box-shadow: 0 4px 16px rgba(79,70,229,0.4);
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .speak-btn:active { transform: scale(0.92); }
-    .speak-btn.speaking {
-      animation: pulse 1s infinite;
-      background: linear-gradient(135deg, #10B981, #059669);
-    }
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.5); }
-      50% { box-shadow: 0 0 0 16px rgba(16,185,129,0); }
-    }
-    .speak-label { font-size: 12px; color: var(--text-light); margin-top: 8px; }
+    /* ===== RECORD ===== */
+    .rec-wrap { text-align:center; margin:10px 0; }
+    .recbtn { width:54px; height:54px; border-radius:50%; background:linear-gradient(135deg,var(--danger),#DC2626); border:none; color:#fff; font-size:20px; cursor:pointer; box-shadow:0 4px 12px rgba(239,68,68,.3); transition:all .2s; }
+    .recbtn.on { animation:rpulse 1s infinite; }
+    @keyframes rpulse { 0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.5)} 50%{box-shadow:0 0 0 12px rgba(239,68,68,0)} }
+    .recbtn:active { transform:scale(.92); }
+    .reclbl { font-size:11px; color:var(--text-light); margin-top:5px; }
+    .recst { font-size:11px; color:var(--text-light); margin-top:3px; min-height:16px; }
 
-    /* Score panel */
-    .score-panel {
-      background: linear-gradient(135deg, #4F46E5, #7C3AED);
-      border-radius: 20px;
-      padding: 28px 24px;
-      color: white;
-      text-align: center;
-      margin-bottom: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-    .score-panel::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.05);
-    }
-    .score-total {
-      font-size: 64px;
-      font-weight: 900;
-      line-height: 1;
-    }
-    .score-label { font-size: 14px; opacity: 0.8; margin-top: 4px; }
-    .score-breakdown {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 20px;
-    }
-    .score-item {}
-    .score-item-num { font-size: 24px; font-weight: 800; }
-    .score-item-label { font-size: 11px; opacity: 0.7; }
+    /* ===== PROGRESS ===== */
+    .pg-wrap { display:flex; align-items:center; gap:8px; margin:12px 0; }
+    .pg-bar { flex:1; height:7px; background:var(--border); border-radius:7px; overflow:hidden; }
+    .pg-fill { height:100%; background:linear-gradient(90deg,var(--primary),var(--secondary)); border-radius:7px; transition:width .4s; }
+    .pg-txt { font-size:11px; color:var(--text-light); white-space:nowrap; }
 
-    /* Rating stars */
-    .rating-section { text-align: center; margin: 20px 0; }
-    .rating-stars {
-      font-size: 36px;
-      margin-bottom: 8px;
-    }
-    .rating-text {
-      font-size: 20px;
-      font-weight: 800;
-    }
-    .rating-sub {
-      font-size: 13px;
-      color: var(--text-light);
-      margin-top: 4px;
-    }
+    /* ===== BUTTONS ===== */
+    .btn1 { width:100%; padding:15px; background:linear-gradient(135deg,var(--primary),var(--p2)); color:#fff; border:none; border-radius:13px; font-size:15px; font-weight:700; cursor:pointer; }
+    .btn1:active { opacity:.85; transform:scale(.98); }
+    .btn2 { width:100%; padding:13px; background:#fff; color:var(--primary); border:2px solid var(--primary); border-radius:13px; font-size:14px; font-weight:600; cursor:pointer; margin-top:8px; }
+    .btn2:active { background:#EEF2FF; transform:scale(.98); }
+    .btn3 { display:inline-flex; align-items:center; gap:5px; background:none; border:none; color:var(--text-light); font-size:13px; cursor:pointer; padding:8px 0; margin-bottom:10px; }
+    .btn3:active { color:var(--primary); }
 
-    /* Practice session */
-    .quiz-card {
-      background: var(--card);
-      border-radius: 20px;
-      padding: 24px 20px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      margin-bottom: 16px;
-      text-align: center;
-    }
-    .quiz-cn {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .quiz-hint {
-      font-size: 13px;
-      color: var(--text-light);
-      margin-bottom: 20px;
-    }
-    .quiz-input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      font-size: 16px;
-      outline: none;
-      transition: border-color 0.2s;
-      text-align: center;
-    }
-    .quiz-input:focus { border-color: var(--primary); }
-    .quiz-input.correct { border-color: var(--secondary); background: #D1FAE5; }
-    .quiz-input.wrong { border-color: var(--danger); background: #FEE2E2; }
+    /* ===== TIP CARD ===== */
+    .tip { background:#FEF9EF; border-radius:12px; padding:12px 14px; border-left:4px solid var(--accent); margin:10px 0; }
+    .tip-t { font-weight:700; font-size:12px; margin-bottom:3px; }
+    .tip-b { font-size:11px; color:#92400E; }
 
-    .quiz-options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 16px;
-    }
-    .quiz-option {
-      padding: 14px 12px;
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      background: white;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-align: center;
-    }
-    .quiz-option:active { transform: scale(0.97); }
-    .quiz-option.selected { border-color: var(--primary); background: #EEF2FF; }
-    .quiz-option.correct { border-color: var(--secondary); background: #D1FAE5; }
-    .quiz-option.wrong { border-color: var(--danger); background: #FEE2E2; }
+    /* ===== QUIZ ===== */
+    .qcard { background:var(--card); border-radius:18px; padding:20px 16px; box-shadow:0 4px 18px rgba(0,0,0,.07); margin-bottom:14px; text-align:center; }
+    .qask { font-size:13px; color:var(--text-light); margin-bottom:8px; }
+    .qcn { font-size:19px; font-weight:800; margin-bottom:14px; }
+    .qopts { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+    .qopt { padding:13px 10px; border:2px solid var(--border); border-radius:11px; background:#fff; font-size:13px; font-weight:600; cursor:pointer; text-align:center; transition:all .2s; word-break:break-word; }
+    .qopt:active { transform:scale(.97); }
+    .qopt.crt { border-color:var(--secondary); background:#D1FAE5; }
+    .qopt.wrg { border-color:var(--danger); background:#FEE2E2; }
 
-    .quiz-actions { margin-top: 16px; }
-    .btn-primary {
-      width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, var(--primary), #7C3AED);
-      color: white;
-      border: none;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .btn-primary:active { opacity: 0.85; }
+    /* ===== ENCOURAGEMENT ===== */
+    .enc { background:#EEF2FF; border-radius:13px; padding:12px 14px; text-align:center; font-size:13px; font-weight:700; color:var(--primary); margin:10px 0; display:none; }
+    .enc.show { display:block; animation:fadeUp .3s; }
 
-    .btn-secondary {
-      width: 100%;
-      padding: 14px;
-      background: white;
-      color: var(--primary);
-      border: 2px solid var(--primary);
-      border-radius: 14px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    .btn-secondary:active { background: #EEF2FF; }
+    /* ===== SCORE PANEL ===== */
+    .score-p { background:linear-gradient(135deg,#4F46E5,#7C3AED); border-radius:18px; padding:22px 20px; color:#fff; text-align:center; margin-bottom:16px; }
+    .score-n { font-size:60px; font-weight:900; line-height:1; }
+    .score-l { font-size:13px; opacity:.8; margin-top:3px; }
+    .score-bd { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px; }
+    .score-bi {}
+    .score-bin { font-size:22px; font-weight:900; }
+    .score-bil { font-size:10px; opacity:.7; }
 
-    .btn-sm {
-      padding: 10px 20px;
-      font-size: 14px;
-      border-radius: 10px;
-    }
+    /* ===== ACHIEVEMENTS ===== */
+    .achgrid { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+    .achcard { background:var(--card); border-radius:13px; padding:13px 10px; text-align:center; opacity:.4; transition:all .2s; }
+    .achcard.on { opacity:1; border:2px solid var(--accent); }
+    .achicon { font-size:26px; margin-bottom:4px; }
+    .achname { font-size:12px; font-weight:700; }
+    .achdesc { font-size:10px; color:var(--text-light); margin-top:2px; }
 
-    /* Back btn */
-    .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: none;
-      border: none;
-      color: var(--text-light);
-      font-size: 14px;
-      cursor: pointer;
-      padding: 8px 0;
-      margin-bottom: 12px;
-    }
+    /* ===== MODAL ===== */
+    .modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:999; align-items:center; justify-content:center; padding:20px; }
+    .modal-bg.on { display:flex; animation:fadeUp .2s; }
+    .modal { background:#fff; border-radius:22px; padding:28px 22px; width:100%; max-width:340px; text-align:center; }
+    .memoji { font-size:52px; margin-bottom:10px; }
+    .mtitle { font-size:20px; font-weight:900; margin-bottom:5px; }
+    .mmain { font-size:38px; font-weight:900; color:var(--primary); }
+    .msub { font-size:13px; color:var(--text-light); margin:6px 0 18px; }
+    .mstars { font-size:26px; margin-bottom:6px; }
 
-    /* Progress bar */
-    .progress-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 16px 0;
-    }
-    .progress-bar {
-      flex: 1;
-      height: 8px;
-      background: var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      border-radius: 8px;
-      transition: width 0.4s;
-    }
-    .progress-text { font-size: 12px; color: var(--text-light); white-space: nowrap; }
+    /* ===== TOAST ===== */
+    #toast { position:fixed; top:16px; left:50%; transform:translateX(-50%) translateY(-80px); background:var(--primary); color:#fff; padding:10px 22px; border-radius:24px; font-weight:700; font-size:13px; z-index:9999; transition:transform .4s cubic-bezier(.175,.885,.32,1.275); display:flex; align-items:center; gap:6px; white-space:nowrap; }
+    #toast.on { transform:translateX(-50%) translateY(0); }
 
-    /* Tips card */
-    .tip-card {
-      background: linear-gradient(135deg, #FEF3C7, #FDE68A);
-      border-radius: 14px;
-      padding: 14px 16px;
-      margin: 12px 0;
-      border-left: 4px solid var(--accent);
-    }
-    .tip-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
-    .tip-body { font-size: 12px; color: #92400E; }
+    /* ===== CONFETTI ===== */
+    #conf { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9998; }
 
-    /* Result modal */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .modal-overlay.show { display: flex; animation: fadeIn 0.2s; }
-    .modal {
-      background: white;
-      border-radius: 24px;
-      padding: 32px 24px;
-      width: 100%;
-      max-width: 360px;
-      text-align: center;
-    }
-    .modal-emoji { font-size: 56px; margin-bottom: 12px; }
-    .modal-title { font-size: 22px; font-weight: 900; margin-bottom: 6px; }
-    .modal-score { font-size: 40px; font-weight: 900; color: var(--primary); }
-    .modal-sub { font-size: 14px; color: var(--text-light); margin: 8px 0 20px; }
-    .modal-stars { font-size: 28px; margin-bottom: 8px; }
+    /* ===== STATS VIEW ===== */
+    .statd { background:var(--card); border-radius:15px; padding:18px; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+    .statr { display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px solid var(--border); }
+    .statr:last-child { border-bottom:none; }
+    .statrl { font-size:13px; color:var(--text-light); }
+    .statrv { font-size:17px; font-weight:800; color:var(--primary); }
+    .rstbtn { margin-top:14px; background:none; border:2px solid var(--border); border-radius:10px; padding:10px; width:100%; font-size:12px; color:var(--text-light); cursor:pointer; }
+    .rstbtn:active { background:var(--bg); }
 
-    /* Encouragement */
-    .encouragement {
-      background: #EEF2FF;
-      border-radius: 14px;
-      padding: 14px 16px;
-      text-align: center;
-      margin: 12px 0;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--primary);
-      display: none;
-    }
-    .encouragement.show { display: block; animation: fadeIn 0.3s; }
+    /* ===== BACK BTN ===== */
+    .bk { background:none; border:none; color:var(--text-light); font-size:13px; cursor:pointer; padding:8px 0; margin-bottom:10px; display:flex; align-items:center; gap:5px; }
+    .bk:active { color:var(--primary); }
 
-    /* Achievement toast */
-    .toast {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-100px);
-      background: var(--primary);
-      color: white;
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-weight: 700;
-      font-size: 14px;
-      z-index: 200;
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      white-space: nowrap;
-    }
-    .toast.show { transform: translateX(-50%) translateY(0); }
+    /* ===== CULTURE CARDS ===== */
+    .culture-card { background:var(--card); border-radius:15px; padding:16px; margin-bottom:12px; box-shadow:0 2px 8px rgba(0,0,0,.05); cursor:pointer; transition:all .2s; }
+    .culture-card:active { transform:scale(.98); }
+    .culture-emoji { font-size:36px; margin-bottom:8px; }
+    .culture-title { font-weight:700; font-size:15px; margin-bottom:4px; }
+    .culture-desc { font-size:12px; color:var(--text-light); line-height:1.5; }
+    .culture-tag { display:inline-block; padding:3px 10px; border-radius:10px; font-size:10px; font-weight:600; margin-top:6px; }
+    .tag-uk { background:#FEF3C7; color:#92400E; }
+    .tag-us { background:#DBEAFE; color:#1E40AF; }
+    .tag-sg { background:#FCE7F3; color:#9D174D; }
+    .tag-my { background:#FEF9C3; color:#854D0E; }
+    .tag-th { background:#D1FAE5; color:#065F46; }
 
-    /* Record area */
-    .record-area {
-      text-align: center;
-      margin: 12px 0;
-    }
-    .record-btn {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--danger), #DC2626);
-      border: none;
-      color: white;
-      font-size: 22px;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(239,68,68,0.3);
-      transition: all 0.2s;
-    }
-    .record-btn.recording {
-      animation: recordPulse 1s infinite;
-    }
-    @keyframes recordPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.5); }
-      50% { box-shadow: 0 0 0 14px rgba(239,68,68,0); }
-    }
-    .record-label { font-size: 12px; color: var(--text-light); margin-top: 6px; }
-    .record-status { font-size: 13px; color: var(--text-light); margin-top: 4px; min-height: 18px; }
+    /* ===== SONG SECTION ===== */
+    .song-card { background:linear-gradient(135deg,#1E1B4B,#312E81); border-radius:18px; padding:18px 16px; margin-bottom:14px; color:#fff; }
+    .song-tag { display:inline-block; background:rgba(255,255,255,.2); border-radius:20px; padding:3px 12px; font-size:10px; font-weight:700; margin-bottom:8px; }
+    .song-title { font-size:17px; font-weight:800; margin-bottom:2px; }
+    .song-artist { font-size:12px; opacity:.7; margin-bottom:10px; }
+    .song-line { background:rgba(255,255,255,.12); border-radius:10px; padding:11px 13px; margin-bottom:7px; border-left:3px solid #818CF8; }
+    .song-l-cn { font-size:11px; opacity:.7; margin-bottom:3px; }
+    .song-l-en { font-size:15px; font-weight:700; line-height:1.4; }
 
-    /* Empty state */
-    .empty-state {
-      text-align: center;
-      padding: 48px 24px;
-    }
-    .empty-icon { font-size: 56px; margin-bottom: 12px; }
-    .empty-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-    .empty-sub { font-size: 13px; color: var(--text-light); }
+    /* ===== SECTION TITLE ===== */
+    .stitle-wrap { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+    .stitle-main { font-size:15px; font-weight:800; }
 
-    /* Confetti canvas */
-    #confetti {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 300;
-    }
+    /* ===== DIFFICULTY BADGE ===== */
+    .diff { display:inline-flex; align-items:center; gap:3px; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:700; }
+    .diff-e { background:#D1FAE5; color:#065F46; }
+    .diff-m { background:#FEF3C7; color:#92400E; }
+    .diff-h { background:#FEE2E2; color:#991B1B; }
 
-    /* Hidden views */
-    .view { display: none; }
-    .view.active { display: block; }
+    /* ===== TYPE INPUT ===== */
+    .qinput { width:100%; padding:13px 14px; border:2px solid var(--border); border-radius:11px; font-size:15px; outline:none; text-align:center; transition:border-color .2s; }
+    .qinput:focus { border-color:var(--primary); }
+    .qinput.crt { border-color:var(--secondary); background:#D1FAE5; }
+    .qinput.wrg { border-color:var(--danger); background:#FEE2E2; }
 
-    /* Stats detail */
-    .stats-detail {
-      background: var(--card);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .stat-row:last-child { border-bottom: none; }
-    .stat-row-label { font-size: 14px; color: var(--text-light); }
-    .stat-row-val { font-size: 18px; font-weight: 800; color: var(--primary); }
+    /* ===== LISTEN PAGE ===== */
+    .listen-hero { background:linear-gradient(135deg,#4F46E5,#7C3AED); border-radius:18px; padding:24px 18px; color:#fff; margin-bottom:16px; text-align:center; }
+    .listen-hero h2 { font-size:20px; font-weight:900; margin-bottom:4px; }
+    .listen-hero p { font-size:13px; opacity:.8; }
+    .listen-lyric { background:#fff; border-radius:14px; padding:16px; margin-bottom:10px; border-left:4px solid #818CF8; }
+    .listen-l-en { font-size:17px; font-weight:700; color:var(--primary); line-height:1.5; margin-bottom:4px; }
+    .listen-l-cn { font-size:12px; color:var(--text-light); font-style:italic; }
+    .listen-ctrl { display:flex; gap:10px; justify-content:center; margin-top:12px; }
+    .lplay-btn { width:60px; height:60px; border-radius:50%; background:linear-gradient(135deg,#4F46E5,#7C3AED); border:none; color:#fff; font-size:26px; cursor:pointer; box-shadow:0 4px 16px rgba(79,70,229,.4); display:flex; align-items:center; justify-content:center; }
+    .lplay-btn:active { transform:scale(.93); }
+    .lplay-btn.playing { animation:spk 1.5s infinite; }
+    @keyframes spk { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
 
-    .reset-btn {
-      margin-top: 16px;
-      background: none;
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      padding: 10px;
-      width: 100%;
-      font-size: 13px;
-      color: var(--text-light);
-      cursor: pointer;
-    }
-    .reset-btn:active { background: var(--bg); }
+    /* ===== EMPTY ===== */
+    .empty { text-align:center; padding:48px 20px; }
+    .empty-ico { font-size:52px; margin-bottom:10px; }
+    .empty-t { font-size:16px; font-weight:700; margin-bottom:5px; }
+    .empty-s { font-size:13px; color:var(--text-light); }
 
-    /* Country flag banner */
-    .country-banner {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .country-flag {
-      flex: 1;
-      height: 48px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      cursor: pointer;
-      transition: all 0.2s;
-      opacity: 0.5;
-      font-weight: 700;
-      font-size: 11px;
-      text-align: center;
-      line-height: 1.2;
-    }
-    .country-flag.active { opacity: 1; transform: scale(1.05); }
-    .country-flag:active { transform: scale(0.95); }
+    /* ===== CULTURE DETAIL ===== */
+    .cult-detail { background:var(--card); border-radius:18px; padding:20px 16px; margin-bottom:14px; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+    .cult-flag { font-size:40px; margin-bottom:8px; }
+    .cult-hdr { font-size:19px; font-weight:900; margin-bottom:4px; }
+    .cult-sub { font-size:12px; color:var(--text-light); margin-bottom:14px; }
+    .cult-secs { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; }
+    .cult-sec { background:#F1F5F9; border-radius:8px; padding:7px 12px; font-size:11px; font-weight:600; }
+    .cult-section { margin-bottom:14px; }
+    .cult-section-title { font-size:13px; font-weight:800; margin-bottom:6px; color:var(--primary); display:flex; align-items:center; gap:5px; }
+    .cult-section p { font-size:13px; color:var(--text-light); line-height:1.7; }
+    .cult-phrase { background:#F1F5F9; border-radius:10px; padding:10px 13px; margin-bottom:7px; border-left:3px solid var(--primary); }
+    .cult-ph-c { font-size:11px; color:var(--text-light); margin-bottom:2px; }
+    .cult-ph-e { font-size:14px; font-weight:700; color:var(--primary); }
 
-    .country-sg { background: #FFF1F1; }
-    .country-sg.active { box-shadow: 0 0 0 2px #EF4444; }
-    .country-my { background: #FFF7ED; }
-    .country-my.active { box-shadow: 0 0 0 2px #F97316; }
-    .country-th { background: #F0FDF4; }
-    .country-th.active { box-shadow: 0 0 0 2px #10B981; }
+    /* ===== PROGRESS BAR TOP ===== */
+    .top-bar { height:3px; background:var(--border); margin-bottom:0; }
+    .top-fill { height:100%; background:linear-gradient(90deg,var(--primary),var(--secondary)); transition:width .4s; }
   </style>
 </head>
 <body>
 
-<canvas id="confetti"></canvas>
+<canvas id="conf"></canvas>
+<div id="toast">🎉</div>
 
-<!-- Toast -->
-<div class="toast" id="toast">🎉 成就解锁！</div>
-
-<!-- Header -->
-<div class="header">
-  <div class="header-top">
-    <div class="header-title">🇸🇬🇲🇾🇹🇭 英语学习</div>
-    <div class="streak-badge" onclick="showView('stats')">
-      <span class="fire">🔥</span>
-      <span id="streak-num">0</span>天连续
-    </div>
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="hdr-title">🌍 环球英语学习</div>
+    <div class="streak-badge" onclick="goStats()">🔥 <span id="sk">0</span>天</div>
   </div>
   <div class="stats-row">
-    <div class="stat-card">
-      <div class="stat-num" id="total-score">0</div>
-      <div class="stat-label">总积分</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num" id="total-phrases">0</div>
-      <div class="stat-label">已学句型</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num" id="today-learned">0</div>
-      <div class="stat-label">今日学习</div>
-    </div>
+    <div class="stat-card"><div class="stat-num" id="tt-score">0</div><div class="stat-lbl">总积分</div></div>
+    <div class="stat-card"><div class="stat-num" id="tt-words">0</div><div class="stat-lbl">已掌握</div></div>
+    <div class="stat-card"><div class="stat-num" id="tt-today">0</div><div class="stat-lbl">今日</div></div>
   </div>
-  <div class="streak-bar" id="streak-bar"></div>
+  <div class="streak-bar" id="sbar"></div>
 </div>
 
-<!-- Main -->
-<div class="main-content">
-  <!-- Tab Bar -->
-  <div class="tab-bar">
-    <button class="tab-btn active" onclick="switchTab('learn')" id="tab-learn">
-      <span class="tab-icon">📖</span>
-      学习
+<!-- BODY -->
+<div class="body-wrap">
+
+  <!-- TOP PROGRESS -->
+  <div class="top-bar"><div class="top-fill" id="top-fill" style="width:0%"></div></div>
+
+  <!-- TAB BAR -->
+  <div class="tabbar">
+    <button class="tabbtn active" id="tab-learn" onclick="switchTab('learn')">
+      <span class="ico">📖</span>学习
     </button>
-    <button class="tab-btn" onclick="switchTab('quiz')" id="tab-quiz">
-      <span class="tab-icon">✍️</span>
-      练习
+    <button class="tabbtn" id="tab-quiz" onclick="switchTab('quiz')">
+      <span class="ico">✍️</span>练习
     </button>
-    <button class="tab-btn" onclick="switchTab('progress')" id="tab-progress">
-      <span class="tab-icon">🏆</span>
-      成就
+    <button class="tabbtn" id="tab-song" onclick="switchTab('song')">
+      <span class="ico">🎵</span>听歌学
+    </button>
+    <button class="tabbtn" id="tab-ach" onclick="switchTab('ach')">
+      <span class="ico">🏆</span>成就
     </button>
   </div>
 
-  <!-- Learn Panel -->
-  <div class="panel active" id="panel-learn">
-    <div class="country-banner">
-      <div class="country-flag country-sg active" onclick="filterCountry('SG')">🇸🇬<br>新加坡</div>
-      <div class="country-flag country-my" onclick="filterCountry('MY')">🇲🇾<br>马来西亚</div>
-      <div class="country-flag country-th" onclick="filterCountry('TH')">🇹🇭<br>泰国</div>
+  <!-- ===== LEARN PANEL ===== -->
+  <div class="panel active" id="p-learn">
+    <div class="stitle-wrap">
+      <div class="stitle-main">📚 选择国家</div>
     </div>
-    <div id="learn-content"></div>
+    <div class="lvl-row" id="country-row">
+      <button class="lvl-chip sel" onclick="setCountry('ALL',this)">🌍 全部</button>
+      <button class="lvl-chip" onclick="setCountry('UK',this)">🇬🇧 英国</button>
+      <button class="lvl-chip" onclick="setCountry('US',this)">🇺🇸 美国</button>
+      <button class="lvl-chip" onclick="setCountry('SG',this)">🇸🇬 新加坡</button>
+      <button class="lvl-chip" onclick="setCountry('MY',this)">🇲🇾 马来西亚</button>
+      <button class="lvl-chip" onclick="setCountry('TH',this)">🇹🇭 泰国</button>
+    </div>
+    <div id="cat-area"></div>
   </div>
 
-  <!-- Quiz Panel -->
-  <div class="panel" id="panel-quiz">
-    <div id="quiz-content"></div>
+  <!-- ===== QUIZ PANEL ===== -->
+  <div class="panel" id="p-quiz">
+    <div id="quiz-area"></div>
   </div>
 
-  <!-- Progress Panel -->
-  <div class="panel" id="panel-progress">
-    <div id="progress-content"></div>
+  <!-- ===== SONG PANEL ===== -->
+  <div class="panel" id="p-song">
+    <div id="song-area"></div>
   </div>
+
+  <!-- ===== ACHIEVEMENT PANEL ===== -->
+  <div class="panel" id="p-ach">
+    <div id="ach-area"></div>
+  </div>
+
 </div>
 
-<!-- Views (full screen overlays) -->
-<!-- Learn Category View -->
-<div class="view" id="view-categories">
-  <div style="padding: 16px;">
-    <button class="back-btn" onclick="showView('main')">← 返回</button>
-    <div class="cat-grid" id="cat-grid"></div>
-  </div>
+<!-- ===== SUB VIEWS ===== -->
+<!-- Country List -->
+<div id="v-countries" style="display:none;padding:16px 14px;">
+  <button class="bk" onclick="rv('main')">← 返回</button>
+  <div class="stitle-wrap"><div class="stitle-main" id="ct-title">🇬🇧 英国</div></div>
+  <div class="lvl-row" id="ct-lvl"></div>
+  <div id="ct-scenes"></div>
 </div>
 
-<!-- Scene View -->
-<div class="view" id="view-scenes">
-  <div style="padding: 16px;">
-    <button class="back-btn" onclick="showView('categories')">← 返回</button>
-    <h3 id="scene-list-title" style="font-size:18px;margin-bottom:12px;"></h3>
-    <div id="scene-list"></div>
-  </div>
+<!-- Practice -->
+<div id="v-practice" style="display:none;padding:16px 14px;">
+  <button class="bk" onclick="endPrac()">← 返回</button>
+  <div id="prac-area"></div>
 </div>
 
-<!-- Practice View -->
-<div class="view" id="view-practice">
-  <div style="padding: 16px;">
-    <button class="back-btn" onclick="endPractice(); showView('scenes')">← 返回场景</button>
-    <div id="practice-area"></div>
-  </div>
+<!-- Quiz Session -->
+<div id="v-quiz" style="display:none;padding:16px 14px;">
+  <button class="bk" onclick="rv('quiz')">← 返回练习</button>
+  <div id="qz-area"></div>
 </div>
 
-<!-- Quiz Session View -->
-<div class="view" id="view-quiz-session">
-  <div style="padding: 16px;">
-    <button class="back-btn" onclick="showView('quiz')">← 返回练习</button>
-    <div id="quiz-session-area"></div>
-  </div>
+<!-- Song Listen -->
+<div id="v-song" style="display:none;padding:16px 14px;">
+  <button class="bk" onclick="rv('song')">← 返回听歌</button>
+  <div id="ls-area"></div>
 </div>
 
-<!-- Stats View -->
-<div class="view" id="view-stats">
-  <div style="padding: 16px;">
-    <button class="back-btn" onclick="showView('main')">← 返回</button>
-    <h3 style="font-size:18px;margin-bottom:16px;">📊 学习统计</h3>
-    <div class="stats-detail" id="stats-detail"></div>
-  </div>
+<!-- Culture Detail -->
+<div id="v-culture" style="display:none;padding:16px 14px;">
+  <button class="bk" onclick="rv('countries')">← 返回国家</button>
+  <div id="cult-area"></div>
+</div>
+
+<!-- Stats -->
+<div id="v-stats" style="display:none;padding:16px 14px;">
+  <button class="bk" onclick="rv('main')">← 返回</button>
+  <h3 style="font-size:17px;margin-bottom:14px;">📊 学习统计</h3>
+  <div class="statd" id="statd-area"></div>
 </div>
 
 <!-- Result Modal -->
-<div class="modal-overlay" id="result-modal">
+<div class="modal-bg" id="result-m">
   <div class="modal">
-    <div class="modal-emoji" id="modal-emoji">🎉</div>
-    <div class="modal-title" id="modal-title">太棒了！</div>
-    <div class="modal-stars" id="modal-stars">⭐⭐⭐</div>
-    <div class="modal-score" id="modal-score">+100</div>
-    <div class="modal-sub" id="modal-sub">本轮得分，继续加油！</div>
-    <button class="btn-primary" onclick="closeModal()">继续学习</button>
+    <div class="memoji" id="m-em">🎉</div>
+    <div class="mtitle" id="m-title">太棒了！</div>
+    <div class="mstars" id="m-stars">⭐⭐⭐</div>
+    <div class="mmain" id="m-score">+100</div>
+    <div class="msub" id="m-sub">继续保持！</div>
+    <button class="btn1" onclick="closeModal()">继续学习</button>
   </div>
 </div>
 
 <script>
-// ========== DATA ==========
-const ALL_DATA = {
-  airport: {
-    name: "✈️ 机场航班",
-    country: ["SG", "MY", "TH"],
-    scenes: [
+// ============================================================
+// DATA
+// ============================================================
+const DATA = {
+
+  // ===== UK =====
+  UK: {
+    name: '英国', flag: '🇬🇧', color: '#FEF3C7',
+    culture: {
+      title: '英国风土人情',
+      brief: '大不列颠及北爱尔兰联合王国，有着悠久历史和独特文化',
+      tags: ['君主立宪', '下午茶', '绅士文化', '摇滚乐'],
+      history: '英国历史悠久，1066年诺曼底征服开启新纪元。16世纪伊丽莎白一世时期成为海上霸主。工业革命发源地，创造了现代世界的许多发明。',
+      food: '英式早餐(Full English Breakfast)、炸鱼薯条(Fish & Chips)、周日烤肉(Sunday Roast)、下午茶(Afternoon Tea)',
+      idiom: [
+        {c:'天气虽冷，但我们还是出去吧',e:"It's raining, but let's go out anyway"},
+        {c:'别拐弯抹角了，直说吧',e:"Don't beat around the bush"},
+        {c:'我们走着瞧',e:"We'll see about that"},
+        {c:'挤一个伦敦地铁',e:"Pack like sardines on the Tube"},
+      ]
+    },
+    sections: [
       {
-        id: "dep",
-        title: "出发与值机",
-        desc: "办理登机手续",
-        phrases: [
-          { cn: "我想确认我的航班", en: "I'd like to confirm my flight", hint: " ai-d laik tu kanferm mai flait " },
-          { cn: "这趟航班准点吗？", en: "Is this flight on time?", hint: " iz dis flait on taim? " },
-          { cn: "请问在哪办理登机？", en: "Where do I check in?", hint: " weir du ai chek in? " },
-          { cn: "我想要靠窗/过道的座位", en: "I'd like a window / aisle seat", hint: " ai-d laik a windou / ail sit " },
-          { cn: "行李可以免费托运多少？", en: "How much luggage can I check in for free?", hint: " hau mach lakhij kan ai chek in for fri: " }
+        id:'uk_life', title:'日常生活', lvl:'e', country:'UK',
+        scenes:[
+          {id:'greet', title:'问候寒暄', desc:'英国人见面聊天气',
+           phrases:[
+             {c:'今天天气不错啊', e:"Lovely weather, isn't it?", h:"luvli wethr, iznt it?"},
+             {c:'你好，近来可好？', e:"How do you do?", h:"how du iu du:"},
+             {c:'很高兴认识你', e:"Pleased to meet you", h:"plizd tu mit iu"},
+             {c:'保重，多保重', e:"Take care now", h:"teik keir nau"},
+             {c:'改天再聊', e:"We must catch up sometime", h:"wi mast kach ap samtaim"},
+           ]},
+          {id:'uk_shop', title:'商场购物', desc:'英国商店用语',
+           phrases:[
+             {c:'这个多少钱？', e:"How much is this, please?", h:"hau mach iz dis pliz?"},
+             {c:'可以用卡付吗？', e:"Can I pay by card?", h:"kan ai pei bai kard?"},
+             {c:'有学生折扣吗？', e:"Do you do student discounts?", h:"du iu du: studnt diskaunts?"},
+             {c:'能试穿一下吗？', e:"Can I try this on?", h:"kan ai trai dis on?"},
+             {c:'我在找……', e:"I'm looking for…", h:"aim loking for"},
+             {c:'这是最终价吗？', e:"Is this your best price?", h:"iz dis ior best prais?"},
+           ]},
+          {id:'uk_pub', title:'酒吧餐厅', desc:'英国pub文化',
+           phrases:[
+             {c:'请来一杯啤酒', e:"A pint of lager, please", h:"a pint av la:gr pliz"},
+             {c:'我可以点餐了吗？', e:"Are you ready to order?", h:"ar iu redi tu ordr?"},
+             {c:'我要一份炸鱼薯条', e:"I'll have the fish and chips, please", h:"ail hav dhi fish and chips pliz"},
+             {c:'买单！', e:"Can I have the bill, please?", h:"kan ai hav dhi bil pliz"},
+             {c:'这杯我请客', e:"This one is on me", h:"dis wan iz on mi:"},
+           ]},
         ]
       },
       {
-        id: "immigration",
-        title: "出入境通关",
-        desc: "海关与边检",
-        phrases: [
-          { cn: "这是我的护照", en: "Here is my passport", hint: " hir iz mai pasport " },
-          { cn: "我来这里旅游", en: "I'm here for tourism", hint: " aim hir for turizm " },
-          { cn: "我计划停留一周", en: "I plan to stay for a week", hint: " ai plan tu stei for a wik " },
-          { cn: "我有回程机票", en: "I have a return ticket", hint: " ai hav a ritern tiket " },
-          { cn: "住在这个地址", en: "I'm staying at this address", hint: " aim steiig at dis adres " }
+        id:'uk_travel', title:'出行旅游', lvl:'e', country:'UK',
+        scenes:[
+          {id:'uk_tube', title:'伦敦地铁', desc:'Tube必备',
+           phrases:[
+             {c:'请问在哪买票？', e:"Where can I get a ticket?", h:"weir kan ai get a tiket?"},
+             {c:'这趟车去……吗？', e:"Does this train go to…?", h:"daz dis trein gou tu?"},
+             {c:'下一站是哪？', e:"What's the next stop?", h:"wots dhi nekst stop?"},
+             {c:'请问这个座位有人吗？', e:"Is this seat taken?", h:"iz dis sit teikn?"},
+             {c:'从这到……要多久？', e:"How long does it take to get to…?", h:"hau long daz it teik tu get tu?"},
+             {c:'请让我下车', e:"Excuse me, I need to get off here", h:"ikskyuz mi, ai nid tu get of hir"},
+           ]},
+          {id:'uk_sight', title:'景点参观', desc:'博物馆与地标',
+           phrases:[
+             {c:'请问大英博物馆在哪？', e:"How do I get to the British Museum?", h:"hau du ai get tu dhi britis myuziam?"},
+             {c:'几点开门？', e:"What time does it open?", h:"wot taim daz it oupn?"},
+             {c:'有学生票吗？', e:"Is there a student ticket?", h:"iz deir a studnt tiket?"},
+             {c:'可以拍照吗？', e:"Am I allowed to take photos?", h:"am ai alaud tu teik foutouz?"},
+             {c:'这张票可以用一天吗？', e:"Is this ticket valid for the whole day?", h:"iz dis tiket valid for dhi houl dei?"},
+           ]},
         ]
       },
       {
-        id: "baggage",
-        title: "行李问题",
-        desc: "行李丢失/延误",
-        phrases: [
-          { cn: "我的行李没到", en: "My luggage didn't arrive", hint: " mai lakhij didnt araiv " },
-          { cn: "我想报失行李", en: "I'd like to file a lost luggage report", hint: " ai-d laik tu fail a lost lakhij riprot " },
-          { cn: "这是我的行李牌", en: "Here is my luggage tag", hint: " hir iz mai lakhij tag " },
-          { cn: "预计什么时候能送到？", en: "When can I expect it to be delivered?", hint: " wen kan ai ikspekt it tu bi divord? " }
+        id:'uk_bus', title:'商务进阶', lvl:'m', country:'UK',
+        scenes:[
+          {id:'uk_meet', title:'商务会议', desc:'英国职场表达',
+           phrases:[
+             {c:'我们约个时间开会吧', e:"Let's schedule a meeting", h:"lets skejul a mitiing"},
+             {c:'能再说一遍吗，我没听清', e:"Could you repeat that, please?", h:"kud iu ripit dat pliz?"},
+             {c:'我有个想法想分享', e:"If I may, I'd like to share an idea", h:"if ai mei, ai-d laik tu sheir an aidee"},
+             {c:'我们换个话题吧', e:"Let's move on to the next point", h:"lets muv on tu dhi nekst point"},
+             {c:'这需要内部讨论后再定', e:"We need to discuss this internally", h:"wi nid tu diskas dis internaliy"},
+           ]},
+          {id:'uk_phone', title:'电话沟通', desc:'接打电话',
+           phrases:[
+             {c:'请问是……公司吗？', e:"Is that…company, please?", h:"iz dat compani pliz?"},
+             {c:'请问我可以和……通话吗？', e:"Could I speak to…, please?", h:"kud ai spik tu pliz?"},
+             {c:'请稍等，我帮你转接', e:"Hold the line, please. I'll put you through", h:"hould dhi lain pliz, ail put iu thu:"},
+             {c:'对不起，他在开会', e:"I'm afraid he's in a meeting at the moment", h:"aim afreid hi:z in a mitiing at dhi moumnt"},
+             {c:'方便的时候给我回电话？', e:"Could you call me back when you're free?", h:"kud iu kol mi bak wen ior fri:"},
+           ]},
         ]
-      }
+      },
     ]
   },
-  transport: {
-    name: "🚕 交通出行",
-    country: ["SG", "MY", "TH"],
-    scenes: [
+
+  // ===== US =====
+  US: {
+    name: '美国', flag: '🇺🇸', color: '#DBEAFE',
+    culture: {
+      title: '美国风土人情',
+      brief: '美利坚合众国，文化大熔炉，充满机会与梦想',
+      tags: ['自由', '多元文化', '创新', '好莱坞'],
+      history: '1776年独立，1789年宪法生效。19世纪西进运动，20世纪两次世界大战后成为超级大国。硅谷、好莱坞、华尔街代表科技、影视、金融三大产业。',
+      food: '汉堡包(Hamburger)、热狗(Hot Dog)、披萨(Pizza)、感恩节火鸡(Turkey)、牛排(Steak)',
+      idiom: [
+        {c:'这事我全包了', e:"I've got this completely covered"},
+        {c:'好戏还在后头呢', e:"The best is yet to come"},
+        {c:'机会难得，抓紧机会', e:"You never know until you try"},
+        {c:'说曹操，曹操到', e:"Speak of the devil"},
+      ]
+    },
+    sections: [
       {
-        id: "taxi",
-        title: "打车出行",
-        desc: "Grab / 出租车",
-        phrases: [
-          { cn: "请送我去这个地址", en: "Please take me to this address", hint: " pliz teik mi tu dis adres " },
-          { cn: "到机场多少钱？", en: "How much to the airport?", hint: " hau mach tu dhi eirport? " },
-          { cn: "能收现金吗？", en: "Do you accept cash?", hint: " du iu iksept kash? " },
-          { cn: "不用找了", en: "Keep the change", hint: " kip dhi cheinj " },
-          { cn: "请在这里停车", en: "Please stop here", hint: " pliz stop hir " },
-          { cn: "堵车吗？", en: "Is there a traffic jam?", hint: " iz deir a trafik jam? " }
+        id:'us_life', title:'日常生活', lvl:'e', country:'US',
+        scenes:[
+          {id:'us_greet', title:'美式问候', desc:'美国人见面方式',
+           phrases:[
+             {c:'嗨！你好吗？', e:"Hey! How's it going?", h:"hei! hauz it going?"},
+             {c:'最近怎么样？', e:"What's up?", h:"wots ap?"},
+             {c:'很好，你呢？', e:"Pretty good, you?", h:"priti gud iu?"},
+             {c:'很高兴见到你', e:"Great to meet you", h:"greit tu mit iu"},
+             {c:'改天一起喝咖啡？', e:"We should grab coffee sometime", h:"wi shud grab kofi samtaim"},
+           ]},
+          {id:'us_store', title:'商店购物', desc:'美国商场表达',
+           phrases:[
+             {c:'你们几点关门？', e:"What time do you close?", h:"wot taim du iu klouz?"},
+             {c:'有优惠券吗？', e:"Do you have any coupons?", h:"du iu hav eni kuponz?"},
+             {c:'可以退货吗？', e:"Can I return this?", h:"kan ai ritern dis?"},
+             {c:'我在找打折区', e:"I'm looking for the sale section", h:"aim loking for dhi seil sekshn"},
+             {c:'这个尺码有货吗？', e:"Do you have this in a different size?", h:"du iu hav dis in a difrnt saiz?"},
+           ]},
+          {id:'us_rest', title:'餐厅用餐', desc:'美国餐厅文化',
+           phrases:[
+             {c:'我来埋单', e:"I'll take care of this", h:"ail teik keir av dis"},
+             {c:'可以打包吗？', e:"Can I get a to-go box?", h:"kan ai get a tou gou bokz?"},
+             {c:'味道好极了！', e:"This tastes amazing!", h:"dis teists amaizing!"},
+             {c:'我们预约了', e:"We have a reservation", h:"wi hav a rezrveishn"},
+             {c:'小费一般给多少？', e:"What's the typical tip?", h:"wots dhi tipikl tip?"},
+           ]},
         ]
       },
       {
-        id: "mrt",
-        title: "地铁轻轨",
-        desc: "MRT / BTS / LRT",
-        phrases: [
-          { cn: "最近的地铁站在哪？", en: "Where is the nearest MRT station?", hint: " weir iz dhi niarist MRT steishn? " },
-          { cn: "去…坐哪条线？", en: "Which line goes to…?", hint: " wich lain gouz tu…? " },
-          { cn: "这趟车到…吗？", en: "Does this train go to…?", hint: " daz dis trein gou tu…? " },
-          { cn: "下一站是哪？", en: "What is the next station?", hint: " wot iz dhi nekst steishn? " },
-          { cn: "在哪换乘？", en: "Where do I transfer?", hint: " weir du ai transfur? " },
-          { cn: "买一张去…的票", en: "One ticket to…, please", hint: " wan tiket tu… pliz " }
+        id:'us_travel', title:'出行交通', lvl:'e', country:'US',
+        scenes:[
+          {id:'us_car', title:'租车自驾', desc:'美国公路旅行',
+           phrases:[
+             {c:'我想租一辆车', e:"I'd like to rent a car", h:"ai-d laik tu rent a kar"},
+             {c:'每天租金多少？', e:"What's the daily rate?", h:"wots dhi deili reit?"},
+             {c:'有保险吗？', e:"Is insurance included?", h:"iz inshurans inklu:did?"},
+             {c:'我要加满油', e:"Fill it up, please", h:"fil it ap pliz"},
+             {c:'最近的加油站怎么走？', e:"Where's the nearest gas station?", h:"weirz dhi niarist gas steishn?"},
+             {c:'这车有GPS吗？', e:"Does this car have GPS?", h:"daz dis kar hav GPS?"},
+           ]},
+          {id:'us_air', title:'美国航空', desc:'机场必备',
+           phrases:[
+             {c:'我要改签航班', e:"I need to reschedule my flight", h:"ai nid tu riskejul mai flait"},
+             {c:'我的航班延误了', e:"My flight is delayed", h:"mai flait iz dipleid"},
+             {c:'随身行李超重了', e:"My carry-on is overweight", h:"mai karion iz oouvrweit"},
+             {c:'登机口是哪个？', e:"Which gate is it?", h:"wich geit iz it?"},
+             {c:'有早餐提供吗？', e:"Is breakfast included?", h:"iz brekfast inklu:did?"},
+           ]},
         ]
       },
       {
-        id: "thai_transport",
-        title: "泰国特色交通",
-        desc: "突突车 / 摩的",
-        phrases: [
-          { cn: "突突车去…多少钱？", en: "How much for a tuk-tuk to…?", hint: " hau mach for a tuk-tuk tu…? " },
-          { cn: "到曼谷暹罗广场", en: "To Siam Paragon, please", hint: " tu siam paragan pliz " },
-          { cn: "可以等我一下吗？", en: "Can you wait for me?", hint: " kan iu weit for mi? " },
-          { cn: "太贵了，便宜点", en: "Too expensive, a bit cheaper please", hint: " tu ikspensiv a bit chipur pliz " }
+        id:'us_work', title:'工作职场', lvl:'m', country:'US',
+        scenes:[
+          {id:'us_interview', title:'求职面试', desc:'美式面试',
+           phrases:[
+             {c:'请介绍一下你自己', e:"Tell me about yourself", h:"tel mi abaut iorself"},
+             {c:'你的优势是什么？', e:"What are your strengths?", h:"wot ar ior strengs?"},
+             {c:'为什么想加入我们公司？', e:"Why do you want to work here?", h:"wai du iu wont tu werk hir?"},
+             {c:'你期望的薪资是多少？', e:"What is your salary expectation?", h:"wot iz ior salri ekspekteishn?"},
+             {c:'请问还有什么问题吗？', e:"Do you have any questions?", h:"du iu hav eni kweschnz?"},
+           ]},
+          {id:'us_office', title:'办公室日常', desc:'美国职场表达',
+           phrases:[
+             {c:'我发个会议邀请给你', e:"I'll send you a meeting invite", h:"ail send iu a mitiing invait"},
+             {c:'我们头脑风暴一下', e:"Let's brainstorm", h:"lets breinstorm"},
+             {c:'请把文件抄送给团队', e:"Please CC the team on this", h:"pliz si:si dhi tim on dis"},
+             {c:'这个我来做', e:"I've got this one", h:"aiv got dis wan"},
+             {c:'我们周五之前要完成', e:"We need to wrap this up by Friday", h:"wi nid tu rap dis ap bai fraidi"},
+           ]},
         ]
-      }
+      },
     ]
   },
-  hotel: {
-    name: "🏨 酒店住宿",
-    country: ["SG", "MY", "TH"],
-    scenes: [
+
+  // ===== SG =====
+  SG: {
+    name: '新加坡', flag: '🇸🇬', color: '#FCE7F3',
+    culture: {
+      title: '新加坡风土人情',
+      brief: '花园城市，多元文化融合，干净有序',
+      tags: ['花园城市', '多元文化', '食阁', '严格法律'],
+      history: '1819年莱佛士爵士建立英国贸易站，1965年独立。亚洲四小龙之一，以高效治理著称。华人、马来人、印度人多元共存。',
+      food: '海南鸡饭(Hainanese Chicken Rice)、肉骨茶(Bak Kut Teh)、辣椒蟹(Chili Crab)、叻沙(Laksa)、咖椰吐司(Kaya Toast)',
+      idiom: [
+        {c:'慢慢来，不着急', e:"Take your time, lah", h:"teik ior taim la:"},
+        {c:'吃了吗？', e:"Have you eaten?", h:"hav iu itn?"},
+        {c:'一起喝咖啡？', e:"Kopi?", h:"kopi?"},
+      ]
+    },
+    sections: [
       {
-        id: "checkin",
-        title: "入住与退房",
-        desc: "前台常用表达",
-        phrases: [
-          { cn: "我有预订，名字是…", en: "I have a reservation under the name…", hint: " ai hav a rezerveishn anda dhi neim… " },
-          { cn: "请问几点退房？", en: "What is the checkout time?", hint: " wot iz dhi chekaut taim? " },
-          { cn: "能提前入住吗？", en: "Can I check in early?", hint: " kan ai chek in urli? " },
-          { cn: "我要退房", en: "I'd like to check out", hint: " ai-d laik tu chek aut " },
-          { cn: "房间 Wi-Fi 密码是多少？", en: "What is the Wi-Fi password?", hint: " wot iz dhi wai-fai posward? " }
+        id:'sg_life', title:'日常生活', lvl:'e', country:'SG',
+        scenes:[
+          {id:'sg_food', title:'食阁点餐', desc:'新加坡 Hawker 文化',
+           phrases:[
+             {c:'一份鸡饭，谢谢', e:"One chicken rice, please", h:"wan chikn rais pliz"},
+             {c:'咖啡乌，少糖', e:"Kopi O, less sugar", h:"kopi ou, les shugar"},
+             {c:'在哪里拿号？', e:"Where do I take a number?", h:"weir du ai teik a namba?"},
+             {c:'可以打包吗？', e:"Can I get it to take away?", h:"kan ai get it teik awei?"},
+             {c:'很好吃！', e:"So shiok!", h:"sou shak!"},
+           ]},
+          {id:'sg_trans', title:'公交地铁', desc:'MRT必备',
+           phrases:[
+             {c:'最近的地铁站在哪？', e:"Where's the nearest MRT?", h:"weirz dhi niarist MRT?"},
+             {c:'买一张去…的票', e:"One ticket to…, please", h:"wan tiket tu pliz"},
+             {c:'这趟车去…吗？', e:"Does this train go to…?", h:"daz dis trein gou tu?"},
+             {c:'换乘站在哪？', e:"Where do I transfer?", h:"weir du ai transfur?"},
+             {c:'EZ-Link 卡怎么充值？', e:"How do I top up my EZ-Link?", h:"hau du ai top ap mai EZ-Link?"},
+           ]},
         ]
       },
       {
-        id: "room",
-        title: "房间服务",
-        desc: "问题与请求",
-        phrases: [
-          { cn: "空调不工作了", en: "The air conditioning is not working", hint: " dhi air kundishning iz not werking " },
-          { cn: "热水没有", en: "There's no hot water", hint: " deirz nou hot woter " },
-          { cn: "能多要一条毛巾吗？", en: "Can I get an extra towel?", hint: " kan ai get an ekstra taul? " },
-          { cn: "请帮我叫一辆出租车", en: "Can you call a taxi for me?", hint: " kan iu kol a taksi for mi? " },
-          { cn: "房间号是…", en: "My room number is…", hint: " mai rum namba iz… " }
+        id:'sg_shop', title:'购物消费', lvl:'e', country:'SG',
+        scenes:[
+          {id:'sg_mall', title:'商场购物', desc:'乌节路购物',
+           phrases:[
+             {c:'有免税购物吗？', e:"Is there duty-free shopping?", h:"iz deir duty-free shopping?"},
+             {c:'可以退多少税？', e:"How much tax can I reclaim?", h:"hau mach taks kan ai rikleim?"},
+             {c:'这个有折扣吗？', e:"Is there a discount?", h:"iz deir a diskaunt?"},
+             {c:'在哪退税？', e:"Where's the tax refund counter?", h:"weirz dhi taks rifand kauntar?"},
+             {c:'可以用支付宝吗？', e:"Can I use Alipay?", h:"kan ai iuz alipei?"},
+           ]},
         ]
-      }
+      },
     ]
   },
-  restaurant: {
-    name: "🍽️ 餐饮美食",
-    country: ["SG", "MY", "TH"],
-    scenes: [
+
+  // ===== MY =====
+  MY: {
+    name: '马来西亚', flag: '🇲🇾', color: '#FEF9C3',
+    culture: {
+      title: '马来西亚风土人情',
+      brief: '多元种族国家，美食天堂，热带风情',
+      tags: ['多元文化', '美食', '热带的国土', '宗教和谐'],
+      history: '1957年独立，曾为英国殖民地。华人、马来人、印度人三大民族共同生活。吉隆坡为首都，2020年新行政中心布城建成。',
+      food: '椰浆饭(Nasi Lemak)、沙爹(Satay)、炒粿条(Char Kway Teow)、肉骨茶(Bak Kut Teh)、拉茶(Teh Tarik)',
+      idiom: [
+        {c:'慢慢来，不着急', e:"No rush, lah", h:"nou rash la:"},
+        {c:'很热啊今天', e:"So hot today, ah", h:"sou hot tudei a:"},
+        {c:'吃了吗？', e:" Dah makan?", h:"da:makan?"},
+      ]
+    },
+    sections: [
       {
-        id: "ordering",
-        title: "点餐用餐",
-        desc: "餐厅必备",
-        phrases: [
-          { cn: "请问有英文菜单吗？", en: "Do you have an English menu?", hint: " du iu hav an inglish menyu? " },
-          { cn: "我对…过敏", en: "I'm allergic to…", hint: " aim alurjik tu… " },
-          { cn: "不要太辣", en: "Not too spicy, please", hint: " not tu spaici pliz " },
-          { cn: "买单", en: "Check, please", hint: " chek pliz " },
-          { cn: "可以分开付吗？", en: "Can we pay separately?", hint: " kan wi pei separate li? " },
-          { cn: "好吃！", en: "Delicious!", hint: " dilishas! " }
+        id:'my_life', title:'日常生活', lvl:'e', country:'MY',
+        scenes:[
+          {id:'my_market', title:'巴刹购物', desc:'传统市场',
+           phrases:[
+             {c:'这些水果怎么卖？', e:"How much for these fruits?", h:"hau mach for dhiis fru:ts?"},
+             {c:'可以便宜点吗？', e:"Canjia?", h:"kanjia?"},
+             {c:'给我一公斤', e:"One kilo, please", h:"wan kilo: pliz"},
+             {c:'新鲜吗？', e:"Is it fresh?", h:"iz it fresh?"},
+             {c:'可以刷卡吗？', e:"Can use card?", h:"kan iuz kard?"},
+           ]},
+          {id:'my_food', title:'餐厅食阁', desc:'马来西亚美食',
+           phrases:[
+             {c:'一份椰浆饭', e:"One nasi lemak, please", h:"wan nasi lmek pliz"},
+             {c:'要加辣吗？', e:"Want to add chili?", h:"wont tu ad cheli?"},
+             {c:'拉茶一杯', e:"One teh tarik", h:"wan teh tarik"},
+             {c:'请问有素食吗？', e:"Do you have vegetarian options?", h:"du iu hav vediteriyn optns?"},
+           ]},
         ]
       },
-      {
-        id: "cafe",
-        title: "咖啡店 & 食阁",
-        desc: "新加坡马来西亚特色",
-        phrases: [
-          { cn: "一杯咖啡乌", en: "One kopi O, please", hint: " wan kopi ou pliz " },
-          { cn: "一杯咖啡拿铁", en: "One latte, please", hint: " wan lati pliz " },
-          { cn: "新加坡叻沙", en: "One Laksa, please", hint: " wan lakza pliz " },
-          { cn: "在哪里拿号？", en: "Where do I take a number?", hint: " weir du ai teik a namba? " },
-          { cn: "可以打包吗？", en: "Can I get this to go?", hint: " kan ai get dis tu gou? " }
-        ]
-      },
-      {
-        id: "thai_food",
-        title: "泰国美食场景",
-        desc: "街头美食",
-        phrases: [
-          { cn: "这个是什么？", en: "What is this?", hint: " wot iz dis? " },
-          { cn: "一份 Pad Thai", en: "One Pad Thai, please", hint: " wan pad tai pliz " },
-          { cn: "水可以加冰吗？", en: "Can I have water with ice?", hint: " kan ai hav woter with ais? " },
-          { cn: "再来一份", en: "One more, please", hint: " wan mor pliz " },
-          { cn: "很好吃，很便宜", en: "Very tasty and cheap!", hint: " veri teisti and chip! " }
-        ]
-      }
     ]
   },
-  shopping: {
-    name: "🛒 购物消费",
-    country: ["SG", "MY", "TH"],
-    scenes: [
+
+  // ===== TH =====
+  TH: {
+    name: '泰国', flag: '🇹🇭', color: '#D1FAE5',
+    culture: {
+      title: '泰国风土人情',
+      brief: '微笑之国，佛教国家，热带风情',
+      tags: ['微笑之国', '佛教', '美食', '海岛'],
+      history: '泰国是东南亚唯一未被殖民的国家，1932年建立君主立宪制。佛教为国教，曼谷为首都。清迈为北部文化中心，普吉、芭提雅为旅游胜地。',
+      food: '冬阴功汤(Tom Yum Goong)、泰式炒河粉(Pad Thai)、芒果糯米饭(Khao Niao Mamuang)、绿咖喱(Green Curry)',
+      idiom: [
+        {c:'萨瓦迪卡（你好）', e:"Sawadee kha (female) / Sawadee khrap (male)", h:"sawadi ka / sawadi krap"},
+        {c:'不用谢', e:"Mai pen rai", h:"mai pen rai"},
+        {c:'慢慢来', e:"Sabai sabai", h:"sabai sabai"},
+        {c:'谢谢（女）', e:"Khop khun kha", h:"kop kun ka"},
+        {c:'太贵了', e:"Pai mak", h:"pai mak"},
+      ]
+    },
+    sections: [
       {
-        id: "price",
-        title: "询价与还价",
-        desc: "商场 & 市集",
-        phrases: [
-          { cn: "这个多少钱？", en: "How much is this?", hint: " hau mach iz dis? " },
-          { cn: "能便宜点吗？", en: "Can you give me a discount?", hint: " kan iu giv mi a diskaunt? " },
-          { cn: "太贵了", en: "It's too expensive", hint: " its tu ikspensiv " },
-          { cn: "我只是看看", en: "I'm just looking, thanks", hint: " aim dast loking sanks " },
-          { cn: "这是最终价吗？", en: "Is this the final price?", hint: " iz dis dhi fainl prais? " }
+        id:'th_life', title:'日常生活', lvl:'e', country:'TH',
+        scenes:[
+          {id:'th_food', title:'街头美食', desc:'泰国街头英语',
+           phrases:[
+             {c:'这个多少钱？', e:"How much is this?", h:"hau mach iz dis?"},
+             {c:'不要太辣', e:"Not too spicy, please", h:"not tu spaici pliz"},
+             {c:'水可以加冰吗？', e:"Can I have water with ice?", h:"kan ai hav wotr with ais?"},
+             {c:'来一份 Pad Thai', e:"One Pad Thai, please", h:"wan pad tai pliz"},
+             {c:'好吃，很便宜！', e:"So delicious and cheap!", h:"sou dilishas and chip!"},
+           ]},
+          {id:'th_trans', title:'特色交通', desc:'突突车与摩的',
+           phrases:[
+             {c:'突突车去…多少钱？', e:"How much for a tuk-tuk to…?", h:"hau mach for a tuk-tuk tu?"},
+             {c:'太贵了，能便宜点吗？', e:"Too expensive, can you lower it?", h:"tu ikspensiv kan iu louer it?"},
+             {c:'到曼谷四面佛', e:"To Erawan Shrine, please", h:"tu Erawan Shrain pliz"},
+             {c:'可以等我一下吗？', e:"Can you wait for me?", h:"kan iu weit for mi?"},
+             {c:'在这里停', e:"Stop here, please", h:"stop hir pliz"},
+           ]},
         ]
       },
       {
-        id: "payment",
-        title: "付款与退税",
-        desc: "支付相关",
-        phrases: [
-          { cn: "可以用信用卡吗？", en: "Do you accept credit cards?", hint: " du iu iksept kredit kardz? " },
-          { cn: "可以刷微信/支付宝吗？", en: "Can I pay by WeChat or Alipay?", hint: " kan ai pei bai wichit or alipei? " },
-          { cn: "可以退税吗？", en: "Can I get a tax refund?", hint: " kan ai get a taks rifand? " },
-          { cn: "退税点在哪儿？", en: "Where is the tax refund counter?", hint: " weir iz dhi taks rifand kauntur? " },
-          { cn: "帮我包起来当礼物", en: "Can you wrap this as a gift?", hint: " kan iu rap dis az a gift? " }
+        id:'th_emergency', title:'紧急情况', lvl:'m', country:'TH',
+        scenes:[
+          {id:'th_help', title:'求助场景', desc:'旅行必备',
+           phrases:[
+             {c:'请帮我叫救护车', e:"Please call an ambulance", h:"pliz kol an ambyulns"},
+             {c:'我要去医院', e:"I need to go to the hospital", h:"ai nid tu gou tu dhi hospitl"},
+             {c:'我的护照丢了', e:"I've lost my passport", h:"aiv lost mai pasprt"},
+             {c:'请帮我联系大使馆', e:"Please help me contact my embassy", h:"pliz help mi kantakt mai embesi"},
+             {c:'我有紧急保险', e:"I have travel insurance", h:"ai hav travel inshurans"},
+           ]},
         ]
-      }
+      },
     ]
   },
-  emergency: {
-    name: "🆘 紧急情况",
-    country: ["SG", "MY", "TH"],
-    scenes: [
-      {
-        id: "help",
-        title: "紧急求助",
-        desc: "安全必备",
-        phrases: [
-          { cn: "救命！", en: "Help!", hint: " help! " },
-          { cn: "请帮我报警", en: "Please call the police", hint: " pliz kol dhi polis " },
-          { cn: "我迷路了", en: "I'm lost", hint: " aim lost " },
-          { cn: "我需要看医生", en: "I need to see a doctor", hint: " ai nid tu si: a doktr " },
-          { cn: "医院在哪里？", en: "Where is the hospital?", hint: " weir iz dhi hospitl? " },
-          { cn: "我叫救护车", en: "I'm calling an ambulance", hint: " aim koling an ambyulns " }
-        ]
-      },
-      {
-        id: "lost",
-        title: "物品丢失",
-        desc: "护照/钱包丢了",
-        phrases: [
-          { cn: "我的护照丢了", en: "I've lost my passport", hint: " aiv lost mai pasprt " },
-          { cn: "我的钱包被偷了", en: "My wallet was stolen", hint: " mai wollt woz stolen " },
-          { cn: "我要联系中国大使馆", en: "I need to contact the Chinese embassy", hint: " ai nid tu kantakt dhi chainiiz embsi " },
-          { cn: "能帮我查一下这个地址吗？", en: "Can you help me look up this address?", hint: " kan iu help mi luk ap dis adres? " }
-        ]
-      }
-    ]
-  },
-  daily: {
-    name: "💬 日常寒暄",
-    country: ["SG", "MY", "TH"],
-    scenes: [
-      {
-        id: "greeting",
-        title: "问候寒暄",
-        desc: "基础社交",
-        phrases: [
-          { cn: "你好！最近怎么样？", en: "Hello! How have you been?", hint: " halo! hau hav iu bin? " },
-          { cn: "很好，谢谢！你呢？", en: "Great, thank you! And you?", hint: " greit sanks iu! and iu? " },
-          { cn: "祝你有美好的一天", en: "Have a nice day", hint: " hav a nais dei " },
-          { cn: "很高兴认识你", en: "Nice to meet you", hint: "nais tu mit iu " },
-          { cn: "请多关照", en: "Please take care of me", hint: " pliz teik keir av mi " }
-        ]
-      },
-      {
-        id: "direction",
-        title: "问路指路",
-        desc: "找地点",
-        phrases: [
-          { cn: "请问…怎么走？", en: "Excuse me, how do I get to…?", hint: " ikskyuz mi hau du ai get tu…? " },
-          { cn: "附近有…吗？", en: "Is there a … nearby?", hint: " iz deir a … niarbai? " },
-          { cn: "离这里远吗？", en: "Is it far from here?", hint: " iz it far from hir? " },
-          { cn: "直走，左转，右转", en: "Go straight / Turn left / Turn right", hint: " gou streit / turn left / turn rait " },
-          { cn: "你能给我指一下路吗？", en: "Can you show me the way?", hint: " kan iu shou mi dhi wei? " }
-        ]
-      },
-      {
-        id: "thai_greeting",
-        title: "泰国特有表达",
-        desc: "实用泰式英语",
-        phrases: [
-          { cn: "你好（萨瓦迪卡）", en: "Sawadee kha (female) / Sawadee khrap (male)", hint: " sawadi ka / sawadi krap " },
-          { cn: "谢谢（kop khun ka）", en: "Thank you so much", hint: " sanks iu sou mach " },
-          { cn: "没关系/不用谢", en: "No worries / You're welcome", hint: " nou wariz / ior welkam " },
-          { cn: "稍等一下", en: "Just a moment, please", hint: " dast a mument pliz " },
-          { cn: "慢慢来", en: "Take your time, no rush", hint: " teik ior taim nou rash " }
-        ]
-      }
-    ]
-  }
+
+  // ===== SONGS =====
+  SONGS: [
+    {
+      id:'yesterday', title:'Yesterday', artist:'The Beatles',
+      country:'UK', lvl:'e',
+      desc:'披头士经典，讲述失去爱情的惆怅',
+      lines:[
+        {cn:'昨天，一切突然变得如此简单', en:"Yesterday, all my troubles seemed so far away"},
+        {cn:'现在它看起来只是另一个低落的日子', en:"Now it looks as if they're here to stay"},
+        {cn:'哦，我相信过去的日子', en:"Oh, I believe in yesterday"},
+      ]
+    },
+    {
+      id:'imagine', title:'Imagine', artist:'John Lennon',
+      country:'UK', lvl:'e',
+      desc:'和平主义经典，想象世界和平',
+      lines:[
+        {cn:'想象没有天堂', en:"Imagine there's no heaven"},
+        {cn:'想象没有国家', en:"Imagine there's no countries"},
+        {cn:'活着并不太难', en:"Nothing to kill or die for"},
+        {cn:'想象所有人', en:"Imagine all the people"},
+        {cn:'活在当下', en:"Living for today", h:"lving for tudei"},
+      ]
+    },
+    {
+      id:'hotel_california', title:"Hotel California", artist:"Eagles",
+      country:'US', lvl:'m',
+      desc:'美国摇滚经典，充满隐喻',
+      lines:[
+        {cn:'深夜里她站在沙漠里', en:"On a dark desert highway, cool wind in my hair"},
+        {cn:'温暖的闻着辣味', en:"Warm smell of colitas rising up through the air"},
+        {cn:'远远地我看见一丝光线', en:"Far ahead in the distance, I saw a shimmering light"},
+        {cn:'我的头越来越沉，视线越来越模糊', en:"My head grew heavy and my sight grew dim"},
+      ]
+    },
+    {
+      id:'fix_you', title:'Fix You', artist:'Coldplay',
+      country:'UK', lvl:'m',
+      desc:'英国摇滚乐队，温暖治愈',
+      lines:[
+        {cn:'当你试着走后', en:"When you try your best but you don't succeed"},
+        {cn:'当你得到你想要的却不是需要的', en:"When you get what you want but not what you need"},
+        {cn:'我会修好你', en:"I will fix you"},
+        {cn:'灯光会照亮你的路', en:"And lights will guide you home"},
+      ]
+    },
+    {
+      id:'someone_like_you', title:'Someone Like You', artist:'Adele',
+      country:'UK', lvl:'h',
+      desc:'英国灵魂歌手，讲述失去前任',
+      lines:[
+        {cn:'我听说你安定下来了', en:"I heard that you're settled down"},
+        {cn:'那个让你笑的人', en:"That you found a girl"},
+        {cn:'永不放弃', en:"Never mind, I'll find someone like you"},
+        {cn:'我祝你一切顺利', en:"I wish you nothing but the best"},
+        {cn:'我会找到一个像你的人', en:"I will find someone like you"},
+      ]
+    },
+    {
+      id:'counting_stars', title:'Counting Stars', artist:'OneRepublic',
+      country:'US', lvl:'m',
+      desc:'美国流行摇滚，追逐梦想',
+      lines:[
+        {cn:'我正在数星星', en:"I'm counting stars"},
+        {cn:'不要因为年轻就看不起你的梦想', en:"Don't you dream of things that you can't afford?"},
+        {cn:'把所有东西都放下', en:"Laying down every single thing"},
+        {cn:'我告诉你，我再也不害怕了', en:"And I don't think that I can do this"},
+      ]
+    },
+    {
+      id:'shape_of_you', title:'Shape of You', artist:'Ed Sheeran',
+      country:'UK', lvl:'e',
+      desc:'英国民谣歌手，流行动感',
+      lines:[
+        {cn:'你的身体在说话', en:"Your body is speaking"},
+        {cn:'我正在测量爱', en:"I'm measuring love"},
+        {cn:'和你在一起的方式', en:"The way you make me feel"},
+        {cn:'你就是我想要的那种类型', en:"You're the kind of person that I want"},
+      ]
+    },
+    {
+      id:'perfect', title:'Perfect', artist:'Ed Sheeran',
+      country:'UK', lvl:'m',
+      desc:'订婚之歌，浪漫甜蜜',
+      lines:[
+        {cn:'宝贝，我在舞池中找到你', en:"Baby, I found you dancing in the crowd"},
+        {cn:'我们一起跳过舞', en:"We were dancing all night long"},
+        {cn:'我从来没有见过像你这样的人', en:"I've never met someone quite like you"},
+        {cn:'你是完美的', en:"You're perfect just the way you are"},
+      ]
+    },
+  ],
+
 };
 
-// ========== STATE ==========
-let state = {
-  currentCountry: 'ALL',
-  currentCat: null,
-  currentScene: null,
-  currentTab: 'learn',
-  practiceQueue: [],
-  practiceIndex: 0,
-  quizQueue: [],
-  quizIndex: 0,
-  quizMode: 'choice', // 'choice' | 'type'
-  sessionScore: 0,
-  sessionTotal: 0,
+// ============================================================
+// STATE
+// ============================================================
+let S = {
+  country: 'ALL',
+  lvl: 'ALL',
   practicedToday: new Set(),
+  mastered: new Set(),
   streak: 0,
-  lastDate: null,
+  lastDate: '',
   totalScore: 0,
-  totalPhrases: 0,
-  masterSet: new Set(),
-  history: {} // { phraseId: { correct, total, lastDate } }
+  history: {},
+  quizQueue: [],
+  quizIdx: 0,
+  quizScore: 0,
+  pracQueue: [],
+  pracIdx: 0,
+  tab: 'learn',
 };
 
-// Load from localStorage
-function loadState() {
+function loadS() {
   try {
-    const saved = localStorage.getItem('sgmt_english_v1');
-    if (saved) {
-      const d = JSON.parse(saved);
-      state = { ...state, ...d };
-      state.masterSet = new Set(d.masterSet || []);
-      state.practicedToday = new Set(d.practicedToday || []);
-      checkStreak();
-    }
+    const d = JSON.parse(localStorage.getItem('world_eng_v2')||'{}');
+    S = { ...S, ...d };
+    S.mastered = new Set(d.mastered||[]);
+    S.practicedToday = new Set(d.practicedToday||[]);
+    if (S.lastDate !== getToday()) S.practicedToday = new Set();
+    if (S.lastDate !== getToday()) S.streak = (S.lastDate===yesterday()) ? S.streak : 0;
   } catch(e) {}
 }
 
-function saveState() {
+function saveS() {
   try {
-    const data = {
-      ...state,
-      masterSet: Array.from(state.masterSet),
-      practicedToday: Array.from(state.practicedToday),
-      today: getTodayStr()
-    };
-    localStorage.setItem('sgmt_english_v1', JSON.stringify(data));
+    localStorage.setItem('world_eng_v2', JSON.stringify({
+      ...S,
+      mastered: Array.from(S.mastered),
+      practicedToday: Array.from(S.practicedToday),
+      lastDate: getToday(),
+    }));
   } catch(e) {}
 }
 
-function getTodayStr() {
-  return new Date().toISOString().split('T')[0];
-}
+function getToday() { return new Date().toISOString().split('T')[0]; }
+function yesterday() { return new Date(Date.now()-86400000).toISOString().split('T')[0]; }
 
-function checkStreak() {
-  const today = getTodayStr();
-  const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
-  if (state.lastDate === yesterday) {
-    state.streak = state.streak || 0;
-  } else if (state.lastDate !== today) {
-    state.streak = 0;
-  }
-}
-
-// ========== TTS ==========
-function speak(text) {
-  if (!window.speechSynthesis) {
-    showToast('⚠️ 浏览器不支持语音功能');
-    return;
-  }
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-US';
-  u.rate = 0.85;
-  u.pitch = 1.0;
-  // Try to find a good voice
-  const voices = window.speechSynthesis.getVoices();
-  const preferred = voices.find(v => v.lang === 'en-US' && v.name.toLowerCase().includes('female'))
-    || voices.find(v => v.lang === 'en-US' && v.name.toLowerCase().includes('samantha'))
-    || voices.find(v => v.lang === 'en-US')
-    || voices[0];
-  if (preferred) u.voice = preferred;
-  window.speechSynthesis.speak(u);
-}
-
-// ========== RECORDING (Web Speech API) ==========
-let mediaRecorder = null;
-let audioChunks = [];
-
-function startRecording() {
-  const recBtn = document.getElementById('record-btn');
-  const statusEl = document.getElementById('record-status');
-  if (!recBtn) return;
-  if (mediaRecorder && mediaRecorder.state === 'recording') {
-    mediaRecorder.stop();
-    recBtn.classList.remove('recording');
-    statusEl.textContent = '🎙️ 录音已停止';
-    return;
-  }
-  navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-    mediaRecorder = new MediaRecorder(stream);
-    audioChunks = [];
-    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-    mediaRecorder.onstop = () => {
-      stream.getTracks().forEach(t => t.stop());
-      statusEl.textContent = '🎉 录音完成！尝试跟读练习吧！';
-      showToast('🎤 录音完成！' + (audioChunks.length ? '已保存' : ''));
-    };
-    mediaRecorder.start();
-    recBtn.classList.add('recording');
-    statusEl.textContent = '🔴 录音中...';
-  }).catch(() => {
-    statusEl.textContent = '⚠️ 无法访问麦克风，请检查权限设置';
-  });
-}
-
-// ========== NAVIGATION ==========
-function showView(name) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  const map = {
-    'main': 'view-categories',
-    'categories': 'view-categories',
-    'scenes': 'view-scenes',
-    'practice': 'view-practice',
-    'quiz-session': 'view-quiz-session',
-    'stats': 'view-stats'
-  };
-  const el = document.getElementById(map[name] || name);
-  if (el) el.classList.add('active');
-}
-
-function switchTab(tab) {
-  state.currentTab = tab;
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-' + tab).classList.add('active');
-  renderTab(tab);
-}
-
-function renderTab(tab) {
-  if (tab === 'learn') renderLearn();
-  if (tab === 'quiz') renderQuiz();
-  if (tab === 'progress') renderProgress();
-}
-
-// ========== LEARN RENDER ==========
-function filterCountry(code) {
-  state.currentCountry = code;
-  document.querySelectorAll('.country-flag').forEach(f => f.classList.remove('active'));
-  event.target.closest('.country-flag').classList.add('active');
-  renderLearn();
-}
-
-function renderLearn() {
-  const container = document.getElementById('learn-content');
-  const cats = Object.entries(ALL_DATA).filter(([k, v]) => {
-    if (state.currentCountry === 'ALL') return true;
-    return v.country.includes(state.currentCountry);
-  });
-
-  let html = '';
-  cats.forEach(([key, cat]) => {
-    const done = cat.scenes.reduce((acc, s) => acc + s.phrases.filter(p => state.masterSet.has(p.en)).length, 0);
-    const total = cat.scenes.reduce((acc, s) => acc + s.phrases.length, 0);
-    const pct = total > 0 ? Math.round(done / total * 100) : 0;
-    html += `
-      <div class="cat-card" onclick="openCategory('${key}')">
-        <div class="cat-icon">${cat.name.split(' ')[0]}</div>
-        <div class="cat-name">${cat.name.split(' ').slice(1).join(' ')}</div>
-        <div class="cat-count">${done}/${total} 句已掌握</div>
-        <div class="cat-progress"><div class="cat-progress-bar" style="width:${pct}%"></div></div>
-      </div>
-    `;
-  });
-  container.innerHTML = html;
-}
-
-function openCategory(key) {
-  state.currentCat = key;
-  const cat = ALL_DATA[key];
-  const grid = document.getElementById('cat-grid');
-  grid.innerHTML = cat.scenes.map(s => `
-    <div class="cat-card" onclick="openScene('${key}','${s.id}')">
-      <div class="cat-icon">${s.title[0]}</div>
-      <div class="cat-name">${s.title}</div>
-      <div class="cat-count">${s.phrases.length} 个句型</div>
-      <div class="cat-progress">
-        <div class="cat-progress-bar" style="width:${Math.round(s.phrases.filter(p=>state.masterSet.has(p.en)).length/s.phrases.length*100)}%"></div>
-      </div>
-    </div>
-  `).join('');
-  showView('categories');
-}
-
-function openScene(catKey, sceneId) {
-  state.currentCat = catKey;
-  state.currentScene = sceneId;
-  const cat = ALL_DATA[catKey];
-  const scene = cat.scenes.find(s => s.id === sceneId);
-  document.getElementById('scene-list-title').textContent = scene.title + ' — ' + scene.desc;
-  const today = getTodayStr();
-  document.getElementById('scene-list').innerHTML = scene.phrases.map((p, i) => {
-    const id = p.en;
-    const mastered = state.masterSet.has(id);
-    const hist = state.history[id] || {};
-    const practiced = hist.total || 0;
-    const badgeClass = mastered ? 'badge-mastered' : practiced > 0 ? 'badge-practiced' : 'badge-new';
-    const badgeText = mastered ? '✓ 已掌握' : practiced > 0 ? `已练${practiced}次` : '新';
-    return `
-      <div class="scene-card ${mastered ? 'mastered' : practiced > 0 ? 'practiced' : ''}" onclick="startPractice('${catKey}','${sceneId}')">
-        <div class="scene-header">
-          <div class="scene-title">${p.cn}</div>
-          <span class="scene-badge ${badgeClass}">${badgeText}</span>
-        </div>
-        <div class="scene-desc">${id}</div>
-      </div>
-    `;
-  }).join('');
-  showView('scenes');
-}
-
-// ========== PRACTICE ==========
-function startPractice(catKey, sceneId) {
-  const cat = ALL_DATA[catKey];
-  const scene = cat.scenes.find(s => s.id === sceneId);
-  state.practiceQueue = [...scene.phrases];
-  state.practiceIndex = 0;
-  state.sessionScore = 0;
-  state.sessionTotal = state.practiceQueue.length;
-  state.currentCat = catKey;
-  state.currentScene = sceneId;
-  renderPracticePhrase();
-  showView('practice');
-}
-
-function renderPracticePhrase() {
-  if (state.practiceIndex >= state.practiceQueue.length) {
-    finishPractice();
-    return;
-  }
-  const p = state.practiceQueue[state.practiceIndex];
-  const area = document.getElementById('practice-area');
-  const cat = ALL_DATA[state.currentCat];
-  const scene = cat.scenes.find(s => s.id === state.currentScene);
-  const progress = state.practiceIndex + 1;
-  const pct = Math.round(progress / state.practiceQueue.length * 100);
-
-  area.innerHTML = `
-    <div class="practice-category">${scene.title}</div>
-    <div class="practice-scenario">第 ${progress}/${state.practiceQueue.length} 句</div>
-    <div class="progress-wrap">
-      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-      <div class="progress-text">${pct}%</div>
-    </div>
-    <div class="phrase-card">
-      <div class="phrase-cn">${p.cn}</div>
-      <div class="phrase-en">${p.en}</div>
-      <button class="phrase-btn" onclick="speak('${p.en.replace(/'/g, "\\'")}')">
-        🔊 听发音
-      </button>
-      <div style="font-size:11px;color:#94A3B8;margin-top:6px;">提示：${p.hint}</div>
-    </div>
-
-    <div class="record-area">
-      <button class="record-btn" id="record-btn" onclick="startRecording()">🎤</button>
-      <div class="record-label">点击录音跟读</div>
-      <div class="record-status" id="record-status"></div>
-    </div>
-
-    <div class="tip-card">
-      <div class="tip-title">💡 学习技巧</div>
-      <div class="tip-body">先听发音 3 遍，模仿语调和节奏，然后大声朗读 3 遍，最后录音对比！</div>
-    </div>
-
-    <button class="btn-primary" onclick="markKnown()">
-      ✅ 我学会了，下一句
-    </button>
-    <button class="btn-secondary" onclick="speak('${p.en.replace(/'/g, "\\'")}');this.textContent='再听一遍↻'">
-      🔊 再听一遍
-    </button>
-    <button class="btn-secondary" onclick="state.practiceIndex++; renderPracticePhrase();" style="color:#EF4444;border-color:#EF4444">
-      ↷ 跳过这句
-    </button>
-  `;
-}
-
-function markKnown() {
-  const p = state.practiceQueue[state.practiceIndex];
-  state.masterSet.add(p.en);
-  // Track history
-  if (!state.history[p.en]) state.history[p.en] = { correct: 0, total: 0 };
-  state.history[p.en].total++;
-  state.history[p.en].correct++;
-  state.practicedToday.add(p.en);
-  state.totalPhrases = state.masterSet.size;
-  state.totalScore += 10;
-  state.practiceIndex++;
-  checkAchievements();
-  saveState();
-  updateHeader();
-  renderPracticePhrase();
-}
-
-function endPractice() {
-  if (state.practiceIndex > 0) {
-    const lastDate = getTodayStr();
-    state.lastDate = lastDate;
-    checkStreak();
-    saveState();
-  }
-  updateHeader();
-}
-
-function finishPractice() {
-  const earned = state.practiceIndex * 10;
-  const stars = state.practiceIndex >= state.sessionTotal ? 3 :
-                state.practiceIndex >= state.sessionTotal * 0.6 ? 2 : 1;
-  const msgs = [
-    { emoji: '🌟', title: '继续加油！', sub: '再多学几句就能全部掌握了！' },
-    { emoji: '👍', title: '做得不错！', sub: '已学习 ' + state.practiceIndex + ' 个句型，得 ' + earned + ' 分！' },
-    { emoji: '🎉', title: '太棒了！', sub: '本场景全部掌握！' }
-  ];
-  const m = msgs[stars - 1];
-  showModal(m.emoji, m.title, m.sub, '+' + earned, '⭐'.repeat(stars));
-  confetti();
-  updateHeader();
-  saveState();
-}
-
-// ========== QUIZ ==========
-function renderQuiz() {
-  const container = document.getElementById('quiz-content');
-  const catKeys = Object.keys(ALL_DATA);
-  let allPhrases = [];
-  catKeys.forEach(k => {
-    ALL_DATA[k].scenes.forEach(s => {
-      allPhrases.push(...s.phrases.map(p => ({ ...p, cat: k })));
-    });
-  });
-
-  // Build quiz session
-  state.quizQueue = shuffle([...allPhrases]).slice(0, 10);
-  state.quizIndex = 0;
-  state.sessionScore = 0;
-
-  container.innerHTML = `
-    <div class="quiz-card">
-      <div style="font-size:48px;margin-bottom:12px;">✍️</div>
-      <h3 style="font-size:18px;margin-bottom:6px;">每日练习</h3>
-      <p style="font-size:13px;color:var(--text-light);margin-bottom:16px;">
-        随机抽取 10 道题，测试你对新马泰英语的掌握程度！
-      </p>
-      <div style="background:#F1F5F9;border-radius:12px;padding:14px;margin-bottom:16px;">
-        <div style="font-size:13px;color:var(--text-light);margin-bottom:4px;">题型说明</div>
-        <div style="font-size:14px;">🎯 看中文 → 选英文</div>
-      </div>
-      <button class="btn-primary" onclick="startQuiz()">🚀 开始练习</button>
-    </div>
-    <div class="encouragement show" id="quiz-tip">
-      💪 每天练习 10 题，30 天后你就能自信交流了！
-    </div>
-  `;
-}
-
-function startQuiz() {
-  state.quizMode = Math.random() > 0.5 ? 'choice' : 'type';
-  state.quizIndex = 0;
-  state.sessionScore = 0;
-  renderQuizQuestion();
-  showView('quiz-session');
-}
-
-function renderQuizQuestion() {
-  if (state.quizIndex >= state.quizQueue.length) {
-    finishQuiz();
-    return;
-  }
-  const q = state.quizQueue[state.quizIndex];
-  const wrongOpts = getWrongOptions(q.en, 3);
-  const options = shuffle([q, ...wrongOpts]);
-
-  const pct = Math.round((state.quizIndex) / state.quizQueue.length * 100);
-  const area = document.getElementById('quiz-session-area');
-
-  if (state.quizMode === 'choice') {
-    area.innerHTML = `
-      <div class="progress-wrap">
-        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-        <div class="progress-text">${state.quizIndex + 1}/${state.quizQueue.length}</div>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-hint">请选择正确的英文表达</div>
-        <div class="quiz-cn">${q.cn}</div>
-        <div class="quiz-options" id="quiz-options">
-          ${options.map((opt, i) => `
-            <button class="quiz-option" data-en="${opt.en}" onclick="checkAnswer(this, '${opt.en.replace(/'/g, "\\'")}', '${q.en.replace(/'/g, "\\'")}')">
-              ${opt.en}
-            </button>
-          `).join('')}
-        </div>
-        <button class="btn-secondary" style="margin-top:16px" onclick="speak('${q.en.replace(/'/g, "\\'")}')">🔊 听标准发音</button>
-      </div>
-    `;
-  } else {
-    area.innerHTML = `
-      <div class="progress-wrap">
-        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-        <div class="progress-text">${state.quizIndex + 1}/${state.quizQueue.length}</div>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-hint">请输入正确的英文表达（简写也可以）</div>
-        <div class="quiz-cn">${q.cn}</div>
-        <input class="quiz-input" id="quiz-input" placeholder="Type your answer..." onkeydown="if(event.key==='Enter')checkTypeAnswer()" />
-        <div class="quiz-actions">
-          <button class="btn-primary" onclick="checkTypeAnswer()">✓ 提交答案</button>
-          <button class="btn-secondary" onclick="speak('${q.en.replace(/'/g, "\\'")}')">🔊 听发音</button>
-        </div>
-      </div>
-    `;
-    setTimeout(() => document.getElementById('quiz-input')?.focus(), 100);
-  }
-}
-
-function checkAnswer(btn, selected, correct) {
-  const opts = document.querySelectorAll('.quiz-option');
-  opts.forEach(o => o.style.pointerEvents = 'none');
-  if (selected === correct) {
-    btn.classList.add('correct');
-    state.sessionScore += 10;
-    speak(correct);
-    showToast('✅ 正确！+10分');
-    setTimeout(() => { state.quizIndex++; renderQuizQuestion(); }, 1200);
-  } else {
-    btn.classList.add('wrong');
-    document.querySelectorAll('.quiz-option').forEach(o => {
-      if (o.dataset.en === correct) o.classList.add('correct');
-    });
-    speak(correct);
-    showToast('❌ 正确：' + correct);
-    setTimeout(() => { state.quizIndex++; state.quizMode = 'choice'; renderQuizQuestion(); }, 2000);
-  }
-}
-
-function checkTypeAnswer() {
-  const input = document.getElementById('quiz-input');
-  if (!input) return;
-  const val = input.value.trim().toLowerCase();
-  const q = state.quizQueue[state.quizIndex];
-  const correctLower = q.en.toLowerCase();
-  const isCorrect = val.length > 3 && correctLower.includes(val) ||
-    levenshtein(val, correctLower) < 3;
-
-  if (isCorrect) {
-    input.classList.add('correct');
-    state.sessionScore += 10;
-    speak(q.en);
-    showToast('✅ 太棒了！+10分');
-    setTimeout(() => { state.quizIndex++; state.quizMode = 'choice'; renderQuizQuestion(); }, 1200);
-  } else {
-    input.classList.add('wrong');
-    showToast('❌ 正确：' + q.en);
-    speak(q.en);
-    setTimeout(() => { state.quizIndex++; state.quizMode = 'choice'; renderQuizQuestion(); }, 2000);
-  }
-}
-
-function finishQuiz() {
-  const score = state.sessionScore;
-  const total = state.quizQueue.length * 10;
-  const pct = score / total;
-  const stars = pct >= 0.9 ? 3 : pct >= 0.6 ? 2 : 1;
-  state.totalScore += score;
-  saveState();
-  updateHeader();
-
-  const msgs = [
-    { emoji: '💪', title: '继续加油！', sub: '多做多练，熟能生巧！' },
-    { emoji: '👍', title: '不错！', sub: '答对了 ' + (score/10) + ' 题，得 ' + score + ' 分！' },
-    { emoji: '🎉', title: '完美通关！', sub: '全对！你是英语达人！' }
-  ];
-  const m = msgs[stars - 1];
-  if (pct >= 0.9) confetti();
-  showModal(m.emoji, m.title, m.sub, '+' + score, '⭐'.repeat(stars));
-}
-
-// ========== PROGRESS ==========
-function renderProgress() {
-  const container = document.getElementById('progress-content');
-  const catKeys = Object.keys(ALL_DATA);
-  let totalPhrases = 0;
-  catKeys.forEach(k => {
-    ALL_DATA[k].scenes.forEach(s => { totalPhrases += s.phrases.length; });
-  });
-  const mastered = state.masterSet.size;
-  const pct = totalPhrases > 0 ? Math.round(mastered / totalPhrases * 100) : 0;
-
-  // Recent achievements
-  const achievements = getAchievements();
-  const unlocked = achievements.filter(a => a.unlocked);
-
-  container.innerHTML = `
-    <div class="score-panel">
-      <div class="score-total">${pct}%</div>
-      <div class="score-label">总体掌握度</div>
-      <div class="score-breakdown">
-        <div class="score-item">
-          <div class="score-item-num">${mastered}</div>
-          <div class="score-item-label">已掌握</div>
-        </div>
-        <div class="score-item">
-          <div class="score-item-num">${totalPhrases}</div>
-          <div class="score-item-label">总句型</div>
-        </div>
-        <div class="score-item">
-          <div class="score-item-num">${state.totalScore}</div>
-          <div class="score-item-label">总积分</div>
-        </div>
-      </div>
-    </div>
-
-    <h4 style="font-size:15px;margin:16px 0 12px;">🏅 成就勋章</h4>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-      ${achievements.map(a => `
-        <div style="background:var(--card);border-radius:14px;padding:14px;text-align:center;opacity:${a.unlocked?1:0.4};${a.unlocked?'border:2px solid var(--accent);':''}">
-          <div style="font-size:28px;margin-bottom:4px;">${a.icon}</div>
-          <div style="font-size:12px;font-weight:700;">${a.name}</div>
-          <div style="font-size:10px;color:var(--text-light);margin-top:2px;">${a.desc}</div>
-        </div>
-      `).join('')}
-    </div>
-
-    <h4 style="font-size:15px;margin:20px 0 12px;">📈 各类别进度</h4>
-    <div id="cat-progress-list"></div>
-  `;
-
-  // Render category progress
-  const catList = document.getElementById('cat-progress-list');
-  catList.innerHTML = catKeys.map(k => {
-    const cat = ALL_DATA[k];
-    const total = cat.scenes.reduce((acc, s) => acc + s.phrases.length, 0);
-    const done = cat.scenes.reduce((acc, s) => acc + s.phrases.filter(p => state.masterSet.has(p.en)).length, 0);
-    const pct = total > 0 ? Math.round(done / total * 100) : 0;
-    return `
-      <div style="background:var(--card);border-radius:12px;padding:12px 16px;margin-bottom:8px;box-shadow:0 1px 4px rgba(0,0,0,0.05);">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-          <span style="font-size:13px;font-weight:600;">${cat.name}</span>
-          <span style="font-size:12px;color:var(--text-light);">${done}/${total}</span>
-        </div>
-        <div style="height:6px;background:var(--border);border-radius:6px;overflow:hidden;">
-          <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:6px;transition:all 0.5s;"></div>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-// ========== ACHIEVEMENTS ==========
-function getAchievements() {
-  const mastered = state.masterSet.size;
-  return [
-    { id: 'first', icon: '🌱', name: '起步', desc: '学会第1句', unlocked: mastered >= 1 },
-    { id: 'ten', icon: '🌿', name: '小成', desc: '掌握10句', unlocked: mastered >= 10 },
-    { id: 'twentyfive', icon: '🌳', name: '进阶', desc: '掌握25句', unlocked: mastered >= 25 },
-    { id: 'fifty', icon: '🏆', name: '达人', desc: '掌握50句', unlocked: mastered >= 50 },
-    { id: 'all', icon: '👑', name: '大师', desc: '全部掌握', unlocked: mastered >= 80 },
-    { id: 'streak3', icon: '🔥', name: '坚持3天', desc: '连续学习3天', unlocked: state.streak >= 3 },
-    { id: 'streak7', icon: '💥', name: '坚持7天', desc: '连续学习7天', unlocked: state.streak >= 7 },
-    { id: 'streak30', icon: '🚀', name: '坚持30天', desc: '连续学习30天', unlocked: state.streak >= 30 },
-    { id: 'quizmaster', icon: '🎯', name: '满分', desc: '练习题满分一次', unlocked: false },
-    { id: 'score500', icon: '💎', name: '500分', desc: '总积分达到500', unlocked: state.totalScore >= 500 },
-    { id: 'score1000', icon: '💰', name: '千分', desc: '总积分达到1000', unlocked: state.totalScore >= 1000 },
-    { id: 'thaimaster', icon: '🧧', name: '泰国通', desc: '掌握泰国场景全部句型', unlocked: false },
-  ];
-}
-
-function checkAchievements() {
-  const achs = getAchievements();
-  const newAch = achs.find(a => {
-    const was = getAchievements().find(x => x.id === a.id);
-    return a.unlocked && !was?.unlocked;
-  });
-  if (newAch) {
-    showToast('🎉 成就解锁：' + newAch.icon + ' ' + newAch.name);
-    setTimeout(() => showToast(newAch.desc), 2000);
-  }
-}
-
-// ========== UTILS ==========
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-function getWrongOptions(correct, count) {
-  let allPhrases = [];
-  Object.values(ALL_DATA).forEach(cat => {
-    cat.scenes.forEach(s => { allPhrases.push(...s.phrases); });
-  });
-  const others = allPhrases.filter(p => p.en !== correct);
-  return shuffle(others).slice(0, count);
-}
-
-function levenshtein(a, b) {
-  if (!a.length) return b.length;
-  if (!b.length) return a.length;
-  if (a[0] === b[0]) return levenshtein(a.slice(1), b.slice(1));
-  return 1 + Math.min(
-    levenshtein(a.slice(1), b),
-    levenshtein(a, b.slice(1)),
-    levenshtein(a.slice(1), b.slice(1))
-  );
-}
-
-function updateHeader() {
-  const today = getTodayStr();
-  const todayCount = state.practicedToday.size;
-  document.getElementById('streak-num').textContent = state.streak;
-  document.getElementById('total-score').textContent = state.totalScore;
-  document.getElementById('total-phrases').textContent = state.masterSet.size;
-  document.getElementById('today-learned').textContent = todayCount;
+// ============================================================
+// HEADER UPDATE
+// ============================================================
+function updateHdr() {
+  document.getElementById('sk').textContent = S.streak;
+  document.getElementById('tt-score').textContent = S.totalScore;
+  document.getElementById('tt-words').textContent = S.mastered.size;
+  document.getElementById('tt-today').textContent = S.practicedToday.size;
   renderStreakBar();
+  updateTopBar();
 }
 
 function renderStreakBar() {
-  const bar = document.getElementById('streak-bar');
-  const days = ['一','二','三','四','五','六','日'];
-  const today = new Date().getDay() || 7; // Monday=1, Sunday=7
-  let html = '';
-  for (let i = 6; i >= 0; i--) {
-    const d = (today - i + 7) % 7 + 1; // Mon-Sun
-    const isToday = i === 0;
-    const dayNum = new Date(Date.now() - i * 86400000).getDate();
-    const isDone = i < state.streak || (isToday && state.practicedToday.size > 0);
-    html += `<div class="streak-dot ${isDone ? 'done' : ''} ${isToday ? 'today' : ''}">${dayNum}</div>`;
+  const bar = document.getElementById('sbar');
+  const today = new Date().getDay()||7;
+  let h = '';
+  for (let i=6;i>=0;i--) {
+    const d = (today-i+7)%7+1;
+    const num = new Date(Date.now()-i*86400000).getDate();
+    const done = i < S.streak || (i===0 && S.practicedToday.size>0);
+    h += `<div class="sdot ${done?'done':''} ${i===0?'today':''}">${num}</div>`;
   }
-  bar.innerHTML = html;
+  bar.innerHTML = h;
 }
 
+function updateTopBar() {
+  const total = getTotalPhrases();
+  const pct = total > 0 ? Math.round(S.mastered.size/total*100) : 0;
+  document.getElementById('top-fill').style.width = pct+'%';
+}
+
+function getTotalPhrases() {
+  let n = 0;
+  Object.values(DATA).forEach(k => {
+    if (k.sections) k.sections.forEach(s => s.scenes.forEach(sc => n += sc.phrases.length));
+  });
+  return n;
+}
+
+// ============================================================
+// TAB SWITCHING
+// ============================================================
+function switchTab(tab) {
+  S.tab = tab;
+  document.querySelectorAll('.tabbtn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+tab)?.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('p-'+tab)?.classList.add('active');
+  hideAllViews();
+
+  if (tab==='learn') renderLearn();
+  if (tab==='quiz') renderQuiz();
+  if (tab==='song') renderSongList();
+  if (tab==='ach') renderAch();
+}
+
+function hideAllViews() {
+  ['v-countries','v-practice','v-quiz','v-song','v-culture','v-stats'].forEach(id => {
+    document.getElementById(id).style.display = 'none';
+  });
+}
+
+function rv(name) {
+  hideAllViews();
+  if (name==='main') { switchTab(S.tab); return; }
+  if (name==='countries') { showCountries(S.currentCountry); return; }
+  if (name==='quiz') { switchTab('quiz'); return; }
+  if (name==='song') { switchTab('song'); return; }
+}
+
+function goStats() {
+  hideAllViews();
+  document.getElementById('v-stats').style.display = 'block';
+  renderStats();
+}
+
+function showCountryView(countryKey) {
+  S.currentCountry = countryKey;
+  document.getElementById('v-countries').style.display = 'block';
+  showCountries(countryKey);
+}
+
+// ============================================================
+// RENDER LEARN
+// ============================================================
+function renderLearn() {
+  const area = document.getElementById('cat-area');
+  const countries = Object.keys(DATA).filter(k => k !== 'SONGS');
+  let h = '';
+  countries.forEach(key => {
+    const d = DATA[key];
+    const total = d.sections.reduce((a,s) => a + s.scenes.reduce((b,sc) => b+sc.phrases.length,0), 0);
+    const done = d.sections.reduce((a,s) => a + s.scenes.reduce((b,sc) => b+sc.phrases.filter(p=>S.mastered.has(p.e)).length,0), 0);
+    const pct = total>0 ? Math.round(done/total*100) : 0;
+    h += `
+      <div class="ccard" onclick="showCountryView('${key}')">
+        <div class="ci">${d.flag}</div>
+        <div class="cn">${d.name}</div>
+        <div class="ccnt">${done}/${total} 已掌握</div>
+        <div class="cprog"><div class="cprog-bar" style="width:${pct}%"></div></div>
+      </div>`;
+  });
+  area.innerHTML = h;
+}
+
+// ============================================================
+// COUNTRY DETAIL
+// ============================================================
+function showCountries(key) {
+  const d = DATA[key];
+  if (!d) return;
+  document.getElementById('ct-title').textContent = d.flag + ' ' + d.name;
+
+  // Level filter
+  const lvls = [...new Set(d.sections.map(s=>s.lvl))];
+  let lvlHtml = `<button class="lvl-chip sel" onclick="setLvl('ALL',this)">全部</button>`;
+  lvls.forEach(l => {
+    lvlHtml += `<button class="lvl-chip" onclick="setLvl('${l}',this)">${lvlLabel(l)}</button>`;
+  });
+  document.getElementById('ct-lvl').innerHTML = lvlHtml;
+  S.lvl = 'ALL';
+
+  renderCountryScenes(key);
+}
+
+function setLvl(lvl, btn) {
+  S.lvl = lvl;
+  document.querySelectorAll('#ct-lvl .lvl-chip').forEach(c => c.classList.remove('sel'));
+  btn.classList.add('sel');
+  renderCountryScenes(S.currentCountry);
+}
+
+function lvlLabel(l) {
+  return {e:'初级',m:'中级',h:'高级'}[l]||l;
+}
+
+function renderCountryScenes(key) {
+  const d = DATA[key];
+  const secs = S.lvl==='ALL' ? d.sections : d.sections.filter(s=>s.lvl===S.lvl);
+  const container = document.getElementById('ct-scenes');
+  let html = '';
+
+  secs.forEach(sec => {
+    html += `<div style="margin-top:16px;margin-bottom:4px;"><span style="font-size:12px;font-weight:800;color:var(--text-light);">${sec.title}</span></div>`;
+    sec.scenes.forEach(sc => {
+      const done = sc.phrases.filter(p=>S.mastered.has(p.e)).length;
+      const total = sc.phrases.length;
+      const pct = Math.round(done/total*100);
+      const isMst = done===total && total>0;
+      const isPrc = done>0 && done<total;
+      const badge = isMst ? 'sbdg-mst' : isPrc ? 'sbdg-prc' : 'sbdg-new';
+      const badgeTxt = isMst ? '✓已掌握' : isPrc ? `${done}/${total}` : '新';
+      const cardClass = isMst ? 'mst' : isPrc ? 'prc' : '';
+      html += `
+        <div class="scene-card ${cardClass}" onclick="startPrac('${key}','${sec.id}','${sc.id}')">
+          <div class="sh">
+            <div class="stitle">${sc.title}</div>
+            <span class="sbadge ${badge}">${badgeTxt}</span>
+          </div>
+          <div class="sdesc">${sc.desc} · ${total}句</div>
+          <div class="cprog" style="margin-top:6px"><div class="cprog-bar" style="width:${pct}%"></div></div>
+        </div>`;
+    });
+  });
+
+  // Culture card
+  if (d.culture) {
+    html += `
+      <div class="culture-card" style="margin-top:16px" onclick="showCulture('${key}')">
+        <div class="culture-emoji">🏛️</div>
+        <div class="culture-title">${d.flag} ${d.name}风土人情</div>
+        <div class="culture-desc">${d.culture.brief}</div>
+        <div style="margin-top:8px">
+          ${d.culture.tags.map(t=>`<span class="culture-tag tag-${key.toLowerCase()}">${t}</span>`).join(' ')}
+        </div>
+      </div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+// ============================================================
+// CULTURE DETAIL
+// ============================================================
+function showCulture(key) {
+  const d = DATA[key];
+  if (!d.culture) return;
+  document.getElementById('v-culture').style.display = 'block';
+  const c = d.culture;
+  document.getElementById('cult-area').innerHTML = `
+    <div class="cult-detail">
+      <div class="cult-flag">${d.flag}</div>
+      <div class="cult-hdr">${c.title}</div>
+      <div class="cult-sub">${c.brief}</div>
+      <div class="cult-secs">
+        ${c.tags.map(t=>`<span class="cult-sec">${t}</span>`).join('')}
+      </div>
+      <div class="cult-section">
+        <div class="cult-section-title">📜 历史</div>
+        <p>${c.history}</p>
+      </div>
+      <div class="cult-section">
+        <div class="cult-section-title">🍽️ 美食</div>
+        <p>${c.food}</p>
+      </div>
+      <div class="cult-section">
+        <div class="cult-section-title">💬 地道表达</div>
+        ${c.idiom.map(i=>`
+          <div class="cult-phrase">
+            <div class="cult-ph-c">${i.c}</div>
+            <div class="cult-ph-e">${i.e}</div>
+          </div>`).join('')}
+      </div>
+      <button class="spkbtn" onclick="speak('${c.idiom[0]?.e.replace(/'/g,"\\'")}')">🔊 听发音</button>
+    </div>
+    <div class="tip" style="margin-top:12px">
+      <div class="tip-t">💡 学习建议</div>
+      <div class="tip-b">了解文化背景能让语言学习事半功倍！这些地道表达在当地人日常对话中非常常见。</div>
+    </div>`;
+}
+
+// ============================================================
+// PRACTICE
+// ============================================================
+function startPrac(countryKey, secId, sceneId) {
+  const sec = DATA[countryKey].sections.find(s=>s.id===secId);
+  const scene = sec.scenes.find(s=>s.id===sceneId);
+  S.pracQueue = [...scene.phrases];
+  S.pracIdx = 0;
+  S.currentCountry = countryKey;
+  document.getElementById('v-practice').style.display = 'block';
+  document.getElementById('prac-area').innerHTML = '';
+  renderPracPhrase();
+}
+
+function renderPracPhrase() {
+  if (S.pracIdx >= S.pracQueue.length) { endPrac(); return; }
+  const p = S.pracQueue[S.pracIdx];
+  const total = S.pracQueue.length;
+  const pct = Math.round((S.pracIdx+1)/total*100);
+  const area = document.getElementById('prac-area');
+  area.innerHTML = `
+    <div class="pg-wrap">
+      <div class="pg-bar"><div class="pg-fill" style="width:${pct}%"></div></div>
+      <div class="pg-txt">${S.pracIdx+1}/${total}</div>
+    </div>
+    <div class="pcard">
+      <div class="pcat">跟读练习</div>
+      <div class="pphrase">
+        <div class="pp-cn">${p.c}</div>
+        <div class="pp-en">${p.e}</div>
+        <div class="pp-hint">${p.h||''}</div>
+        <button class="spkbtn" onclick="speak('${p.e.replace(/'/g,"\\'")}')">🔊 发音</button>
+      </div>
+      <div class="rec-wrap">
+        <button class="recbtn" id="recbtn" onclick="toggleRec()">🎤</button>
+        <div class="reclbl">点击录音跟读</div>
+        <div class="recst" id="recst"></div>
+      </div>
+      <div class="tip">
+        <div class="tip-t">💡 技巧</div>
+        <div class="tip-b">先听发音 2 遍，模仿语调，然后大声读 3 遍，再录音对比！</div>
+      </div>
+      <button class="btn1" onclick="markKnown()">✅ 我学会了</button>
+      <button class="btn2" onclick="speak('${p.e.replace(/'/g,"\\'")}')">🔊 再听一遍</button>
+      <button class="btn2" onclick="S.pracIdx++;renderPracPhrase()" style="color:var(--danger);border-color:var(--danger)">↷ 跳过</button>
+    </div>`;
+}
+
+function markKnown() {
+  const p = S.pracQueue[S.pracIdx];
+  S.mastered.add(p.e);
+  S.practicedToday.add(p.e);
+  if (!S.history[p.e]) S.history[p.e] = {c:0,t:0};
+  S.history[p.e].c++; S.history[p.e].t++;
+  S.totalScore += 10;
+  S.pracIdx++;
+  checkAch();
+  saveS();
+  updateHdr();
+  renderPracPhrase();
+}
+
+function endPrac() {
+  if (S.pracIdx > 0) {
+    S.lastDate = getToday();
+    saveS();
+    updateHdr();
+  }
+  document.getElementById('v-practice').style.display = 'none';
+  switchTab('learn');
+  const score = Math.min(S.pracIdx, S.pracQueue.length) * 10;
+  if (score > 0) {
+    showModal('👍', '学习完成！', '本轮+' + score + '分，继续加油！', '+' + score, '⭐');
+  }
+}
+
+let recOn = false;
+let mediaRecorder = null;
+
+function toggleRec() {
+  const btn = document.getElementById('recbtn');
+  const st = document.getElementById('recst');
+  if (recOn) {
+    if (mediaRecorder) mediaRecorder.stop();
+    btn.classList.remove('on'); recOn = false;
+    st.textContent = '🎤 录音已停止';
+    return;
+  }
+  navigator.mediaDevices?.getUserMedia({audio:true}).then(stream => {
+    mediaRecorder = new MediaRecorder(stream);
+    const chunks = [];
+    mediaRecorder.ondataavailable = e => chunks.push(e.data);
+    mediaRecorder.onstop = () => {
+      stream.getTracks().forEach(t=>t.stop());
+      st.textContent = '🎉 录音完成！' + (chunks.length ? '已保存' : '');
+    };
+    mediaRecorder.start();
+    btn.classList.add('on'); recOn = true;
+    st.textContent = '🔴 录音中...';
+  }).catch(() => { st.textContent = '⚠️ 请允许麦克风权限'; });
+}
+
+// ============================================================
+// QUIZ
+// ============================================================
+function renderQuiz() {
+  const area = document.getElementById('quiz-area');
+  area.innerHTML = `
+    <div class="qcard">
+      <div style="font-size:44px;margin-bottom:10px;">✍️</div>
+      <h3 style="font-size:17px;margin-bottom:5px;">每日练习</h3>
+      <p style="font-size:13px;color:var(--text-light);margin-bottom:14px;">随机抽取10道题，测试你的掌握程度！</p>
+      <div class="tip">
+        <div class="tip-t">📝 题型</div>
+        <div class="tip-b">看中文 → 选英文 / 填英文，两种题型交替</div>
+      </div>
+      <button class="btn1" onclick="startQuiz()">🚀 开始练习</button>
+    </div>
+    <div class="enc show">💪 每天练习10题，30天后你就能自信交流！</div>`;
+}
+
+function startQuiz() {
+  let all = [];
+  Object.values(DATA).forEach(d => {
+    if (d.sections) d.sections.forEach(s => s.scenes.forEach(sc => sc.phrases.forEach(p => all.push(p))));
+  });
+  S.quizQueue = shuffle([...all]).slice(0,10);
+  S.quizIdx = 0; S.quizScore = 0;
+  document.getElementById('v-quiz').style.display = 'block';
+  renderQuizQ();
+}
+
+function renderQuizQ() {
+  if (S.quizIdx >= S.quizQueue.length) { endQuiz(); return; }
+  const q = S.quizQueue[S.quizIdx];
+  const pct = Math.round(S.quizIdx/S.quizQueue.length*100);
+  const wrongOpts = getWrong(q.e, 3);
+  const opts = shuffle([{e:q.e},{e:wrongOpts[0]},{e:wrongOpts[1]},{e:wrongOpts[2]}]);
+  const isType = Math.random() > 0.5;
+
+  const area = document.getElementById('qz-area');
+  area.innerHTML = `
+    <div class="pg-wrap">
+      <div class="pg-bar"><div class="pg-fill" style="width:${pct}%"></div></div>
+      <div class="pg-txt">${S.quizIdx+1}/${S.quizQueue.length}</div>
+    </div>
+    <div class="qcard">
+      <div class="qask">请选择正确的英文</div>
+      <div class="qcn">${q.c}</div>
+      <div class="qopts" id="qopts">
+        ${opts.map(o=>`<button class="qopt" onclick="checkAns(this,'${o.e.replace(/'/g,"\\'")}','${q.e.replace(/'/g,"\\'")}')">${o.e}</button>`).join('')}
+      </div>
+      <button class="btn2" style="margin-top:12px" onclick="speak('${q.e.replace(/'/g,"\\'")}')">🔊 听发音</button>
+    </div>`;
+}
+
+function checkAns(btn, sel, correct) {
+  document.querySelectorAll('.qopt').forEach(o => o.style.pointerEvents='none');
+  if (sel === correct) {
+    btn.classList.add('crt');
+    S.quizScore += 10;
+    speak(correct);
+    showToast('✅ 正确！+10分');
+    setTimeout(()=>{S.quizIdx++;renderQuizQ()},1000);
+  } else {
+    btn.classList.add('wrg');
+    document.querySelectorAll('.qopt').forEach(o => { if(o.textContent===correct) o.classList.add('crt'); });
+    speak(correct);
+    showToast('❌ '+correct);
+    setTimeout(()=>{S.quizIdx++;renderQuizQ()},1800);
+  }
+}
+
+function endQuiz() {
+  const score = S.quizScore;
+  const total = S.quizQueue.length * 10;
+  const pct = score/total;
+  const stars = pct>=0.9?3:pct>=0.6?2:1;
+  const msgs = [{emoji:'💪',title:'继续加油！',sub:'熟能生巧，多练多进步！'},{emoji:'👍',title:'不错！',sub:`答对${score/10}题，得${score}分！`},{emoji:'🎉',title:'满分通关！',sub:'你是英语达人！'}];
+  const m = msgs[stars-1];
+  S.totalScore += score;
+  saveS(); updateHdr();
+  if (stars===3) confetti();
+  showModal(m.emoji, m.title, m.sub, '+'+score, '⭐'.repeat(stars));
+}
+
+// ============================================================
+// SONGS
+// ============================================================
+function renderSongList() {
+  const area = document.getElementById('song-area');
+  const songs = DATA.SONGS;
+  let h = `
+    <div class="listen-hero">
+      <h2>🎵 听歌学英语</h2>
+      <p>边听边学，感受英语的韵律之美</p>
+    </div>
+    <div class="stitle-wrap"><div class="stitle-main">🎤 歌曲列表</div></div>`;
+  songs.forEach(song => {
+    const flag = song.country==='UK'?'🇬🇧':'🇺🇸';
+    const lvlD = song.lvl==='e'?'diff-e':song.lvl==='m'?'diff-m':'diff-h';
+    const lvlT = song.lvl==='e'?'初级':song.lvl==='m'?'中级':'高级';
+    h += `
+      <div class="song-card" onclick="openSong('${song.id}')">
+        <div class="song-tag">${flag} ${lvlT}</div>
+        <div class="song-title">🎵 ${song.title}</div>
+        <div class="song-artist">${song.artist}</div>
+        <div style="font-size:11px;opacity:.7;margin-top:4px;">${song.desc}</div>
+      </div>`;
+  });
+  area.innerHTML = h;
+}
+
+function openSong(id) {
+  const song = DATA.SONGS.find(s=>s.id===id);
+  if (!song) return;
+  document.getElementById('v-song').style.display = 'block';
+  const flag = song.country==='UK'?'🇬🇧':'🇺🇸';
+  const lvlD = song.lvl==='e'?'diff-e':song.lvl==='m'?'diff-m':'diff-h';
+  const lvlT = song.lvl==='e'?'初级':song.lvl==='m'?'中级':'高级';
+  let html = `
+    <div class="song-card">
+      <div class="song-tag">${flag} ${lvlT}</div>
+      <div class="song-title">🎵 ${song.title}</div>
+      <div class="song-artist">${song.artist}</div>
+      <div style="font-size:12px;opacity:.7;margin-top:4px;">${song.desc}</div>
+    </div>
+    <div class="qcard" style="text-align:center">
+      <div class="listen-l-en" style="font-size:15px;margin-bottom:8px;">${flag} ${song.country==='UK'?'英国':'美国'} · ${lvlT}</div>
+      <button class="lplay-btn" id="lplaybtn" onclick="playSong()">▶️</button>
+      <div style="font-size:11px;color:var(--text-light);margin-top:5px;">点击播放发音</div>
+    </div>`;
+  song.lines.forEach((line, i) => {
+    html += `
+      <div class="listen-lyric" onclick="speak('${line.en.replace(/'/g,"\\'")}')">
+        <div class="listen-l-cn">${line.cn}</div>
+        <div class="listen-l-en">${line.en}</div>
+      </div>`;
+  });
+  html += `<div class="tip" style="margin-top:12px">
+    <div class="tip-t">💡 学习技巧</div>
+    <div class="tip-b">先完整听一遍，再逐句跟唱，注意连读和弱读，最后尝试不看字幕唱出来！</div>
+  </div>`;
+  document.getElementById('ls-area').innerHTML = html;
+}
+
+function playSong() {
+  const btn = document.getElementById('lplaybtn');
+  const allEn = DATA.SONGS.flatMap(s=>s.lines.map(l=>l.en));
+  const rand = allEn[Math.floor(Math.random()*allEn.length)];
+  btn.classList.add('playing');
+  speak(rand);
+  setTimeout(()=>btn.classList.remove('playing'),3000);
+}
+
+// ============================================================
+// ACHIEVEMENTS
+// ============================================================
+function renderAch() {
+  const area = document.getElementById('ach-area');
+  const achs = getAch();
+  area.innerHTML = `
+    <div class="score-p">
+      <div class="score-n">${getTotalPhrases()>0?Math.round(S.mastered.size/getTotalPhrases()*100):0}%</div>
+      <div class="score-l">总体掌握度</div>
+      <div class="score-bd">
+        <div><div class="score-bin">${S.mastered.size}</div><div class="score-bil">已掌握</div></div>
+        <div><div class="score-bin">${S.totalScore}</div><div class="score-bil">总积分</div></div>
+        <div><div class="score-bin">${S.streak}</div><div class="score-bil">连续天</div></div>
+      </div>
+    </div>
+    <div class="achgrid">
+      ${achs.map(a=>`<div class="achcard ${a.on?'on':''}">
+        <div class="achicon">${a.icon}</div>
+        <div class="achname">${a.name}</div>
+        <div class="achdesc">${a.desc}</div>
+      </div>`).join('')}
+    </div>`;
+}
+
+function getAch() {
+  const n = S.mastered.size;
+  return [
+    {icon:'🌱',name:'起步',desc:'掌握1句',on:n>=1},
+    {icon:'🌿',name:'小成',desc:'掌握10句',on:n>=10},
+    {icon:'🌳',name:'进阶',desc:'掌握25句',on:n>=25},
+    {icon:'🏆',name:'达人',desc:'掌握50句',on:n>=50},
+    {icon:'👑',name:'大师',desc:'掌握80句',on:n>=80},
+    {icon:'🔥',name:'坚持3天',desc:'连续3天',on:S.streak>=3},
+    {icon:'💥',name:'坚持7天',desc:'连续7天',on:S.streak>=7},
+    {icon:'🚀',name:'坚持30天',desc:'连续30天',on:S.streak>=30},
+    {icon:'🎵',name:'歌神',desc:'学完一首歌',on:false},
+    {icon:'🌍',name:'环球',desc:'学完3个国家',on:false},
+    {icon:'💎',name:'500分',desc:'总积分500',on:S.totalScore>=500},
+    {icon:'💰',name:'千分',desc:'总积分1000',on:S.totalScore>=1000},
+  ];
+}
+
+// ============================================================
+// STATS
+// ============================================================
+function renderStats() {
+  const area = document.getElementById('statd-area');
+  area.innerHTML = `
+    <div class="statr"><div class="statrl">🔥 连续学习</div><div class="statrv">${S.streak}天</div></div>
+    <div class="statr"><div class="statrl">⭐ 总积分</div><div class="statrv">${S.totalScore}</div></div>
+    <div class="statr"><div class="statrl">📚 已掌握句型</div><div class="statrv">${S.mastered.size}句</div></div>
+    <div class="statr"><div class="statrl">📅 今日学习</div><div class="statrv">${S.practicedToday.size}句</div></div>
+    <div class="statr"><div class="statrl">🌍 学习国家</div><div class="statrv">${Object.keys(DATA).filter(k=>k!=='SONGS').length}</div></div>
+    <div class="statr"><div class="statrl">🎵 歌曲数量</div><div class="statrv">${DATA.SONGS.length}首</div></div>
+    <button class="rstbtn" onclick="if(confirm('确定要清空所有学习记录吗？此操作不可恢复！')){localStorage.clear();location.reload()}">🗑️ 重置所有数据</button>`;
+}
+
+// ============================================================
+// TTS
+// ============================================================
+function speak(text) {
+  if (!window.speechSynthesis) { showToast('⚠️ 浏览器不支持语音'); return; }
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = 0.85;
+  const voices = window.speechSynthesis.getVoices();
+  const v = voices.find(x=>x.lang==='en-US'&&x.name.toLowerCase().includes('female')) || voices.find(x=>x.lang==='en-US') || voices[0];
+  if (v) u.voice = v;
+  window.speechSynthesis.speak(u);
+}
+
+// ============================================================
+// MODAL & TOAST
+// ============================================================
 function showModal(emoji, title, sub, score, stars) {
-  document.getElementById('modal-emoji').textContent = emoji;
-  document.getElementById('modal-title').textContent = title;
-  document.getElementById('modal-sub').textContent = sub;
-  document.getElementById('modal-score').textContent = score;
-  document.getElementById('modal-stars').textContent = stars;
-  document.getElementById('result-modal').classList.add('show');
+  document.getElementById('m-em').textContent = emoji;
+  document.getElementById('m-title').textContent = title;
+  document.getElementById('m-sub').textContent = sub;
+  document.getElementById('m-score').textContent = score;
+  document.getElementById('m-stars').textContent = stars;
+  document.getElementById('result-m').classList.add('on');
 }
-
 function closeModal() {
-  document.getElementById('result-modal').classList.remove('show');
-  showView('main');
-  renderLearn();
+  document.getElementById('result-m').classList.remove('on');
+  rv('main');
 }
 
 function showToast(msg) {
-  const toast = document.getElementById('toast');
-  toast.innerHTML = msg;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2500);
+  const t = document.getElementById('toast');
+  t.innerHTML = msg;
+  t.classList.add('on');
+  setTimeout(()=>t.classList.remove('on'),2500);
 }
 
-// ========== CONFETTI ==========
+// ============================================================
+// CONFETTI
+// ============================================================
 function confetti() {
-  const canvas = document.getElementById('confetti');
-  const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  const particles = [];
-  const colors = ['#4F46E5', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4'];
-  for (let i = 0; i < 120; i++) {
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: -20 - Math.random() * 200,
-      vx: (Math.random() - 0.5) * 4,
-      vy: Math.random() * 3 + 2,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      size: Math.random() * 8 + 4,
-      rot: Math.random() * 360,
-      rotV: (Math.random() - 0.5) * 10
-    });
+  const cvs = document.getElementById('conf');
+  const ctx = cvs.getContext('2d');
+  cvs.width = innerWidth; cvs.height = innerHeight;
+  const ps = [];
+  const cols = ['#4F46E5','#10B981','#F59E0B','#EF4444','#8B5CF6','#06B6D4'];
+  for (let i=0;i<100;i++) {
+    ps.push({x:Math.random()*cvs.width,y:-20-Math.random()*200,vx:(Math.random()-.5)*4,vy:Math.random()*3+2,c:cols[Math.floor(Math.random()*cols.length)],s:Math.random()*8+4,r:Math.random()*360,rv:(Math.random()-.5)*10});
   }
-  let frame = 0;
+  let fr = 0;
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-      ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.rot * Math.PI / 180);
-      ctx.fillStyle = p.color;
-      ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size * 0.6);
+    ctx.clearRect(0,0,cvs.width,cvs.height);
+    ps.forEach(p => {
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.r*Math.PI/180);
+      ctx.fillStyle=p.c; ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.6);
       ctx.restore();
-      p.x += p.vx;
-      p.y += p.vy;
-      p.rot += p.rotV;
-      p.vy += 0.1;
+      p.x+=p.vx; p.y+=p.vy; p.r+=p.rv; p.vy+=.1;
     });
-    frame++;
-    if (frame < 150) requestAnimationFrame(draw);
-    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    fr++;
+    if (fr<120) requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,cvs.width,cvs.height);
   }
   draw();
 }
 
-// ========== INIT ==========
-window.speechSynthesis?.getVoices();
-window.speechSynthesis?.addEventListener('voiceschanged', () => {
-  window.speechSynthesis.getVoices();
-});
-
-loadState();
-updateHeader();
-renderLearn();
-
-// Daily reset
-const today = getTodayStr();
-if (state.today !== today) {
-  state.practicedToday = new Set();
-  state.today = today;
-  checkStreak();
-  saveState();
+// ============================================================
+// UTILS
+// ============================================================
+function shuffle(arr) {
+  for (let i=arr.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+  return arr;
 }
+function getWrong(correct, n) {
+  let all = [];
+  Object.values(DATA).forEach(d => { if(d.sections) d.sections.forEach(s=>s.scenes.forEach(sc=>sc.phrases.forEach(p=>all.push(p.e)))); });
+  return shuffle(all.filter(e=>e!==correct)).slice(0,n);
+}
+function checkAch() {
+  const achs = getAch();
+  const prev = achs.filter(a=>a.on);
+  setTimeout(()=>{
+    const now = getAch().filter(a=>a.on);
+    const newA = now.find((a,i)=>!prev[i]?.on);
+    if (newA) showToast('🎉 成就解锁：'+newA.icon+' '+newA.name);
+  },100);
+}
+function setCountry(code, btn) {
+  S.country = code;
+  document.querySelectorAll('#country-row .lvl-chip').forEach(c=>c.classList.remove('sel'));
+  btn.classList.add('sel');
+  renderLearn();
+}
+
+// ============================================================
+// INIT
+// ============================================================
+loadS();
+updateHdr();
+renderLearn();
+window.speechSynthesis?.getVoices();
 </script>
 </body>
 </html>
